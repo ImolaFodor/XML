@@ -31,7 +31,13 @@ app.controller('aktiController', function($scope,$state,$mdDialog,$translate, lo
 	
 	$scope.openXTML = function(akt){
 		aktService.openXTML(akt.id, function(response){
-			
+			$mdDialog.show({
+		          templateUrl: 'module/akt/aktXHTML.html',
+		          clickOutsideToClose: true,
+		          akt: akt
+		       }).then(function(){
+		    	   ucitajAkte();
+		       });
 		})
 	}
 });
