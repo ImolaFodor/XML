@@ -69,7 +69,7 @@ public class ActController{
         }
     }
 
-    @RequestMapping(value = "/akt/brisi/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "/akt/brisi/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id){
         System.out.print(id);
         try {

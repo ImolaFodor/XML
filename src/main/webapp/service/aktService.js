@@ -32,6 +32,16 @@ app.service('aktService', function($http){
                 data: entity
             }
             $http(req).then(onSuccess, onError);
+        },
+        delete : function(id, onSuccess, onError){
+        	var req = {
+        			method: 'DELETE',
+        			url: '/akt/brisi/'+id,
+        			headers: {
+                        'Content-Type': 'application/xml'
+                    },
+        	}
+        	 $http(req).then(onSuccess, onError);
         }
     }
 });
