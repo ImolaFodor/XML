@@ -1,0 +1,100 @@
+<div class="login">
+	<form name="login" ng-show="showLoginForm">
+		<div layout="column" flex="70">
+			<md-input-container flex> <label>{{'USERNAME'
+				| translate}}</label> <input required name="username" ng-model="username">
+			<div ng-messages="login.username.$error"
+				ng-if="login.username.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+
+			</div>
+			<div>
+				<div ng-if="nePostojiKorisnik"><p style = "color:red; font-size:90%;">{{'NO_USERNAME' | translate}}</p></div>
+			</div>
+			</md-input-container>
+			<md-input-container flex> <label>{{'PASSWORD'
+				| translate}}</label> <input required name="password" type="password" ng-model="password">
+			<div ng-messages="login.password.$error"
+				ng-if="login.password.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+			</div>
+			<div ng-if="neispravnaLoznika"><p style = "color:red; font-size:90%;">{{'PASSWORD_NOT_OK' | translate}}</p></div>
+			</md-input-container>
+			<md-button class="md-raised md-primary" ng-click="loginUser($event);"
+				ng-disabled="login.$invalid">{{'LOGIN' | translate}}</md-button>
+			<md-button class="md-raised" ng-click="registerForm();">{{'REGISTER'
+			| translate}}</md-button>
+
+		</div>
+	</form>
+	
+	<form name="register" ng-show="showRegisterForm">
+		<div layout="column" flex="70">
+			<md-input-container flex> <label>{{'NAME'
+				| translate}}</label> <input required name="name" ng-model="user.name">
+			<div ng-messages="register.name.$error" ng-if="register.name.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+			</div>
+			</md-input-container>
+			<md-input-container flex> <label>{{'USERNAME'
+				| translate}}</label> <input required name="username"
+				ng-model="user.username">
+			<div ng-messages="register.username.$error"
+				ng-if="register.username.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+				<div ng-message="userExists">{{'USERNAME_EXISTS' | translate}}</div>
+			</div>
+			<div ng-if="userExists"><p style = "color:red; font-size:90%;">{{'USERNAME_EXISTS' | translate}}</p></div>
+			</md-input-container>
+
+			<md-input-container flex> <label>{{'PASSWORD'
+				| translate}}</label> <input required name="password"
+				ng-model="user.password" type="password">
+			<div ng-messages="register.password.$error"
+				ng-if="register.password.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+			</div>
+			</md-input-container>
+			<md-input-container flex> <label>{{'PASSWORD_REPEAT'
+				| translate}}</label> <input required name="repeat_password"
+				ng-model="repeat_password" type="password">
+			<div ng-messages="register.repeat_password.$error"
+				ng-if="register.repeat_password.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+				<span ng-if="passNotEqual" role="alert">{{'PASSWORD_NOT_EQUAL'
+					| translate}}</span>
+			</div>
+			</md-input-container>
+			<md-input-container flex> <label>{{'GENDER'
+				| translate}}</label> <md-select ng-model="user.gender"> <md-option
+				ng-repeat="gender in genders" value="{{gender}}">{{gender
+			| translate}}</md-option> </md-select> </md-input-container>
+			<md-input-container flex> <label>{{'EMAIL_ADDRESS'
+				| translate}}</label> <input required name="email" ng-model="user.email"
+				type="email">
+			<div ng-messages="register.email.$error"
+				ng-if="register.email.$dirty">
+				<div ng-message="required">{{'ERROR_REQUIRED_FIELD' |
+					translate}}</div>
+			</div>
+			</md-input-container>
+
+		</div>
+
+		<div layout="row" , flex="70">
+			<md-button class="md-raised md-primary"
+				ng-click="registerUser($event);" ng-disabled="register.$invalid">{{'REGISTER'
+			| translate}}</md-button>
+			<md-button class="md-raised md-primary" ng-click="cancelRegister();">{{'CANCEL'
+			| translate}}</md-button>
+
+		</div>
+	</form>
+
+</div>

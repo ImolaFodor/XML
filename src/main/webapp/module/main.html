@@ -1,0 +1,20 @@
+
+<div ng-init="init()" layout="row">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 md-primary" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" style = "width: 200px;
+min-width: 200px;">
+    	<p>{{user.name}}</p>
+        <h2>
+            <span class="md-padding">{{'MIG' | translate}}</span>
+        </h2>
+
+        <md-list layout="column" flex>
+            <md-button ng-if = "loggedUser.role != 'ADMIN'" class="nav-option" ui-sref-active="active" ui-sref="main.akti">{{'AKTI' | translate}}</md-button>
+            <md-button class="nav-option" ui-sref-active="active" ui-sref="main.amandmani">{{'AMANDMANI' | translate}}</md-button>
+            <md-button ng-hide="" class="nav-option" ui-sref-active="active" ui-sref="main.sednica">{{'SEDNICA' | translate}}</md-button>
+            <div flex></div>
+            
+            <md-button class="nav-option" data-ng-click="logout()"> {{'LOGOUT' | translate}}</md-button>
+        </md-list>
+    </md-sidenav>
+    <ui-view flex></ui-view>
+</div>

@@ -1,0 +1,21 @@
+<md-content flex layout="column" class="container" ng-init = "init()">
+<md-toolbar class="md-primary md-hue-2 md-whiteframe-z1" layout="row" layout-align="space-around left">
+        <md-input-container md-no-float flex-gt-lg="70">
+            <input class="search" ng-model="search.name" placeholder="Pretrazi akte">
+        </md-input-container>
+        <div hide-gt-sm></div>
+</md-toolbar>
+<div class = "container">
+	<md-card>
+		<md-card-container>
+			<md-list>
+				<md-list-item ng-repeat = "akt in akti" ng-click="openAktDetails()" ng-show = "akti.length>0">
+				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
+				<md-divider></md-divider>
+				<md-list-item ng-show="akti.length ===0"><label>Ne postoje dostupni akti </label></md-list-item>
+				</md-list-item>
+			</md-list>
+		</md-card-container>
+	</md-card>
+</div>
+</md-content>
