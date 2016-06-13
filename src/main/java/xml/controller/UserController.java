@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import security.PasswordStorage;
+//import security.PasswordStorage;
 import xml.Constants;
 import xml.stateStuff.State;
 import xml.stateStuff.StateManager;
@@ -44,7 +44,7 @@ public class UserController {
     public ResponseEntity post(@RequestBody Korisnik korisnik){
         //prvo bez validacije
 
-        byte[] salt = new byte[0];
+        /*byte[] salt = new byte[0];
         try {
             salt = PasswordStorage.generateSalt();
         } catch (NoSuchAlgorithmException e) {
@@ -66,7 +66,7 @@ public class UserController {
             System.out.println(e.toString());
         }
 
-        korisnik.setPassword(PasswordStorage.base64Encode(hashedPassword));
+        korisnik.setPassword(PasswordStorage.base64Encode(hashedPassword));*/
 
 
 
