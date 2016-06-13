@@ -1,5 +1,6 @@
 app.controller('aktiController', function($scope,$state,$mdDialog,$translate, loginService, aktService){
 	$scope.init = function(){
+<<<<<<< HEAD
 		aktService.getAll(function(response){
 			$scope.akti = response.data;
 			console.log($scope.akti);
@@ -20,4 +21,13 @@ app.controller('aktiController', function($scope,$state,$mdDialog,$translate, lo
 	$scope.ucitajAkte = function(){
 		
 	}
+=======
+		alert("DADAS");
+		aktService.getAll(function(response){
+			$scope.akti = response.data;
+			console.log($scope.akti);
+		})
+	};
+	
+>>>>>>> branch 'master' of https://github.com/ImolaFodor/XML.git
 });
