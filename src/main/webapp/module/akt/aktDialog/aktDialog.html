@@ -1,0 +1,74 @@
+<style>
+ md-dialog {
+       height:90%;
+       width:90%;
+       max-height:100%;
+       max-width: 100%;
+       position: relative;
+       top: 10;
+       left: 10;
+       right: 10;
+       down: 10;
+       border-radius: 5;
+   }
+   
+ md-dialog-actions.cancelSaveCv{
+ 	position: absolute;
+ 	bottom : 0;
+ 	right : 0;
+ }
+ input.ng-invalid {
+   color: red;
+   border-color: red;
+}
+input.ng-untouched.ng-invalid {
+     color: red;
+     border-color: red;
+}
+.tooltipdemoBasicUsage md-toolbar .md-toolbar-tools .md-button,
+.tooltipdemoBasicUsage md-toolbar .md-toolbar-tools .md-button:hover {
+  box-shadow: none;
+  border: none;
+  transform: none;
+  -webkit-transform: none; }
+textarea
+    {
+      width: 150px;
+      height: 100px;
+      vertical-align: middle;
+    }
+</style>
+<md-dialog data-ng-init="init()">
+<md-toolbar>
+ <div class="md-toolbar-tools">
+        <h2>AKT</h2>
+        <span flex></span>
+      </div>
+</md-toolbar>
+    <md-dialog-content class = "container" flex = "100">
+     <div layout = "row">
+                <div flex = "90">
+	                <form name = "ticketInfo">
+	                	<md-content class = "" ><div layout = "column" layout-padding >
+	                	    <label ng-show = "greskaCreate">Akt nije dobro formatiran!</label>
+	                		<md-input-container >
+	    						<label>{{'NAZIV' | translate}}</label>
+	            				<input  name="label" ng-model="ticket.label" disabled>
+	        				</md-input-container>
+							<md-input-container >
+	    						<label>{{'TEKST AKTA' | translate}}</label>
+	            				<textarea  name="" ng-model="akt" ></textarea>
+	        				</md-input-container>
+							</div>
+	                	</md-content>
+	                	</form>
+	                	</div>
+	                	
+                </div>
+    </md-dialog-content>
+    <md-dialog-actions class =  "cancelSaveCv" >
+    	<md-button  ng-show = "false" class = "md-warn md-raised" ng-click="delete()">{{'DELETE' | translate}}</md-button>
+        <md-button class = "md-primary md-raised" ng-click="cancel()">Odustani</md-button>
+        <md-button ng-hide = "" class = "md-primary md-raised" ng-click="save()" ng-disabled="ticketInfo.$invalid">Sačuvaj</md-button>
+    </md-dialog-actions>
+</md-dialog>
