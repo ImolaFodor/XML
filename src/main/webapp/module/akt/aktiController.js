@@ -28,5 +28,10 @@ app.controller('aktiController', function($scope,$state,$mdDialog,$translate, lo
 			
 		})
 	}
-
+	
+	$scope.openXTML = function(akt){
+		aktService.openXTML(akt.id, function(response){
+			
+		})
+	}
 });

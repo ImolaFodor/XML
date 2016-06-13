@@ -42,6 +42,18 @@ app.service('aktService', function($http){
                     },
         	}
         	 $http(req).then(onSuccess, onError);
+        },
+        openXTML: function(id, onSuccess, onError){
+        	var req = {
+        			method: 'GET',
+        			url: 'akt/openXHTML/'+id,
+        			headers: {
+                        'Content-Type': 'application/xml'
+                    },
+        	}
+        	$http(req).then(onSuccess, onError);
+        	
         }
+        
     }
 });

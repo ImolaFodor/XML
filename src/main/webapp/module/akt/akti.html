@@ -12,11 +12,16 @@
 			<md-list>
 				<md-list-item ng-repeat = "akt in akti" ng-click="openAktDetails()" ng-show = "akti.length>0">
 				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
+				
+				<md-divider></md-divider>
 				<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
 					            <md-icon  class="material-icons" ng-click = "deleteAkt(akt)">delete_forever</md-icon>
 					             <md-tooltip>Izbrisi akt</md-tooltip>
 					          </md-button>
-				<md-divider></md-divider>
+			    <md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+					            <md-icon  class="material-icons" ng-click = "openXTML(akt)">open_in_new</md-icon>
+					             <md-tooltip>Otvori XTML</md-tooltip>
+					          </md-button>
 				<md-list-item ng-show="akti.length ===0"><label>Ne postoje dostupni akti </label></md-list-item>
 				</md-list-item>
 			</md-list>
