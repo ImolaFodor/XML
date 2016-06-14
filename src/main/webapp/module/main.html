@@ -6,11 +6,19 @@ min-width: 200px;">
         <h2>
             <span class="md-padding">{{'MIG' | translate}}</span>
         </h2>
-
+		<div ng-hide = "loggedUser.id" layout = "column" layout-padding layout-align = "start center">
+			<label >Korisnicko ime:</label>
+			<input ng-model = "username">
+			
+			<label>Lozinka:</label>
+			<input ng-model = "password" type = "password">
+			
+			<md-button class = "md-primary md-raised" ng-click = "login($event)">PRIJAVI SE</md-button>
+		</div>
         <md-list layout="column" flex>
-            <md-button ng-if = "loggedUser.role != 'ADMIN'" class="nav-option" ui-sref-active="active" ui-sref="main.akti">{{'AKTI' | translate}}</md-button>
-            <md-button class="nav-option" ui-sref-active="active" ui-sref="main.amandmani">{{'AMANDMANI' | translate}}</md-button>
-            <md-button ng-hide="" class="nav-option" ui-sref-active="active" ui-sref="main.sednica">{{'SEDNICA' | translate}}</md-button>
+            <md-button  class="nav-option" ui-sref-active="active" ui-sref="main.akti">{{'AKTI' | translate}}</md-button>
+            <md-button ng-if = "loggedUser.uloga =='Odbornik'" class="nav-option" ui-sref-active="active" ui-sref="main.amandmani">{{'AMANDMANI' | translate}}</md-button>
+            <md-button ng-if = "loggedUser.uloga =='Odbornik'"  class="nav-option" ui-sref-active="active" ui-sref="main.sednica">{{'SEDNICA' | translate}}</md-button>
             <div flex></div>
             
             <md-button class="nav-option" data-ng-click="logout()"> {{'LOGOUT' | translate}}</md-button>

@@ -13,9 +13,7 @@ import javax.xml.validation.SchemaFactory;
 import java.io.*;
 import java.nio.charset.Charset;
 
-/**
- * Created by Dorian on 1.6.2016.
- */
+
 public class XMLConverter<T> {
 
     public static final Charset UTF_8 = Charset.forName("UTF-8");

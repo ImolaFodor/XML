@@ -14,24 +14,22 @@ app.controller('login', function($scope, $state, $mdDialog, $translate, loginSer
 	$scope.userExists = false;
 	$scope.user.gender = 'MALE';
     $scope.loginUser = function(ev){
-    	$state.transitionTo('main.akti');
-    	return;
-        loginService.login ($scope.username, $scope.password, function(response){
-        	loginService.getProfile(function(response){
+    	/*$state.transitionTo('main.akti');
+    	return;*/
+    	$scope.user.username = $scope.username;
+    	$scope.user.password = $scope.password
+        loginService.login ($scope.user, function(response){
+        	$state.transitionTo("main.akti");
+        	/*loginService.getProfile(function(response){
         		
         		$scope.user = response.data;
-        		if($scope.user.role == 'ADMIN'){
-        			$state.transitionTo('main.projects');
-        		}else{
-        			$state.transitionTo('main.dashboard');
-        		}
-        		
-        	});
+        		$state.transitionTo('main.akti');
+        	});*/
         }, function(response){
         	console.log(response);
         	if(response.data == "BAD_PASSWORD"){
         		$scope.neispravnaLoznika = true;
-        	}else if(response.data == "NO_USER"){
+        	}else if(response.data == "NO_CONTENT"){
         		console.log("NO USERR")
         		$scope.neispravnaLoznika = true;
         		$scope.nePostojiKorisnik = true;
@@ -56,7 +54,7 @@ app.controller('login', function($scope, $state, $mdDialog, $translate, loginSer
 		   return;
 	   }
 	   
-	   loginService.registerUser($scope.user, function(){
+	   loginService.post($scope.user, function(){
 		   $mdDialog.show(
 				      $mdDialog.alert()
 				        .parent(angular.element(document.querySelector('#popupContainer')))

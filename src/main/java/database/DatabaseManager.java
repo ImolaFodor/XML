@@ -5,9 +5,7 @@ import com.marklogic.client.DatabaseClientFactory;
 
 import java.io.IOException;
 
-/**
- * Created by Daniel on 6/9/2016.
- */
+
 public class DatabaseManager {
 
     static public class Client{

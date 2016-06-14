@@ -11,9 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
-/**
- * Created by Dorian on 31.5.2016.
- */
+
 public class TestXMLWriter {
 
     private static DatabaseClient client;

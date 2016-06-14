@@ -36,8 +36,13 @@ public class UserDAO extends GenericDAO<Korisnik,Long> implements IUserDAO {
                 .append(password)
                 .append("\"]");
 
-
-        return getByQuery(query.toString()).get(0);
+        Korisnik k = null;
+        try{
+        	k = getByQuery(query.toString()).get(0);
+        }catch(Exception e){
+        	
+        }
+        return k;
     }
 
 
