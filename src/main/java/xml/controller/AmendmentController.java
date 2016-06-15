@@ -1,13 +1,17 @@
 package xml.controller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,22 +41,34 @@ public class AmendmentController{
         }
     }
 
-    @RequestMapping(value = "/amandman/" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<Amandman> post(@RequestBody Amandman amendment) {
+    @RequestMapping(value = "/amandman/{aktId}" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Amandman> post(@RequestBody Amandman amendment, @PathVariable("aktId") long aktId) {
+    	System.out.println("DOdavanje amandmana");
         try{
+        	System.out.println("DOdavanje amandmana 2");
+        	amendment.getKontekst().setActId(aktId);
             amendmentDao.create(amendment, Constants.Amendment+amendment.getId().toString(), Constants.ProposedAmendmentCollection);
+            System.out.println("DOdavanje amandmana");
             return new ResponseEntity(HttpStatus.OK);
         }catch (Exception e){
+        	e.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
     
     @RequestMapping(value = "/amandman", method = RequestMethod.GET)
     public ResponseEntity getAll(){
+    	System.out.println("GEEET");
     	List<Amandman> amandmani = new ArrayList<Amandman>();
 		try {
 			amandmani = amendmentDao.getAll();
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

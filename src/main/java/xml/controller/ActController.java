@@ -1,26 +1,46 @@
 package xml.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.fop.apps.FOPException;
+import org.apache.fop.apps.FOUserAgent;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.MimeConstants;
+import org.apache.xalan.processor.TransformerFactoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.xml.sax.SAXException;
+
 import xml.Constants;
 import xml.model.PravniAkt;
 import xml.repositories.IActDAO;
-
-import javax.ws.rs.Path;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class ActController {
@@ -28,16 +48,24 @@ public class ActController {
 	@Autowired
 	private IActDAO aktDao;
 
+	private FopFactory fopFactory;
+
+	private TransformerFactory transformerFactory;
+
 	@RequestMapping(value = "/akt", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PravniAkt>> getAll() {
+		System.out.println("ADDASDASDASD");
 		try {
 			List<PravniAkt> akati = aktDao.getAll();
-			if (akati.size() == 0)
-				return new ResponseEntity<List<PravniAkt>>(HttpStatus.NO_CONTENT);
-
+			/*
+			 * if (akati.size() == 0) return new
+			 * ResponseEntity<List<PravniAkt>>(HttpStatus.NO_CONTENT);
+			 */
+			System.out.println("ADASDASD: " + akati.size());
 			return new ResponseEntity<List<PravniAkt>>(akati, HttpStatus.OK);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -95,14 +123,14 @@ public class ActController {
 			System.out.println(id);
 			List<PravniAkt> akti = aktDao.getAll();
 			PravniAkt akt = new PravniAkt();
-			for(PravniAkt a: akti){
-				if(a.getId() == id){
+			for (PravniAkt a : akti) {
+				if (a.getId() == id) {
 					akt = a;
 				}
 			}
 			if (akt == null)
 				return new ResponseEntity<List<PravniAkt>>(HttpStatus.NO_CONTENT);
-			
+
 			JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
 			Marshaller marshaller = context.createMarshaller();
 
@@ -119,8 +147,6 @@ public class ActController {
 
 			tf.transform(ss, sr);
 
-			
-
 			return new ResponseEntity(akt, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -128,4 +154,106 @@ public class ActController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@RequestMapping(value = "/akt/openPDF/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity getByXHTMLIdPdf(@PathVariable("id") Long id) {
+		
+		// Initialize FOP factory object
+		try {
+			fopFactory = FopFactory.newInstance(new File("src/fop.xconf"));
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Setup the XSLT transformer factory
+		transformerFactory = new TransformerFactoryImpl();
+		
+		// Point to the XSL-FO file
+				File xsltFile = new File("data/xsl-fo/bookstore_fo.xsl");
+
+				// Create transformation source
+				StreamSource transformSource = new StreamSource(xsltFile);
+				
+				// Initialize the transformation subject
+				StreamSource source = new StreamSource(new File("data/xsl-fo/bookstore.xml"));
+
+				// Initialize user agent needed for the transformation
+				FOUserAgent userAgent = fopFactory.newFOUserAgent();
+				
+				// Create the output stream to store the results
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+
+				// Initialize the XSL-FO transformer object
+				Transformer xslFoTransformer = null;
+				try {
+					xslFoTransformer = transformerFactory.newTransformer(transformSource);
+				} catch (TransformerConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				// Construct FOP instance with desired output format
+				Fop fop = null;
+				try {
+					fop = fopFactory.newFop(MimeConstants.MIME_PDF, userAgent, outStream);
+				} catch (FOPException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// Resulting SAX events 
+				Result res = null;
+				try {
+					res = new SAXResult(fop.getDefaultHandler());
+				} catch (FOPException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// Start XSLT transformation and FOP processing
+				try {
+					xslFoTransformer.transform(source, res);
+				} catch (TransformerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// Generate PDF file
+				File pdfFile = new File("gen/bookstore_result.pdf");
+				OutputStream out = null;
+				try {
+					out = new BufferedOutputStream(new FileOutputStream(pdfFile));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					out.write(outStream.toByteArray());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				try {
+					System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println("[INFO] End.");
+				
+				return new ResponseEntity(HttpStatus.OK);
+	}
+	
 }

@@ -11,6 +11,8 @@ app.controller('amandmaniController', function($scope,$state,$mdDialog,$translat
 		});
 		$scope.isDodajNovi  = false;
 		amandmanService.getAll(function(response){
+			alert("ADDASDASD");
+			console.log(response);
 			$scope.amandmani = response.data;
 		})
 	};

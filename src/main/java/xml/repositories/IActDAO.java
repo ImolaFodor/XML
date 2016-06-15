@@ -1,13 +1,19 @@
 package xml.repositories;
 
-import xml.model.PravniAkt;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
+
+import xml.model.PravniAkt;
 
 
 public interface IActDAO extends IGenericDAO<PravniAkt,Long>{
+	public ArrayList<PravniAkt> getProposedActs() throws JAXBException, IOException;
+    public ArrayList<PravniAkt> getAdoptedActs() throws JAXBException, IOException;
+    public void updateActState(Long id,String state) throws IOException;
+    public ArrayList<PravniAkt> getProposedActsToChangeState() throws JAXBException, IOException;
+    public ArrayList<PravniAkt> searchByText(String criteria,String collection) throws IOException;
 
+    String getXsltDocument(Long id) throws IOException;
 }

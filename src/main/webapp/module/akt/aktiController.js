@@ -40,4 +40,19 @@ app.controller('aktiController', function($scope,$state,$mdDialog,$translate, lo
 		       });
 		})
 	}
+	$scope.openPDF = function(akt){
+		aktService.openPDF(akt.id, function(response){
+			alert("PDF");
+		})
+	}
+	$scope.createAmandman = function(akt){
+		$mdDialog.show({
+	          controller: 'amandmanDialogController',
+	          templateUrl: 'module/amandman/amandmanDialog/amandmanDialog.html',
+	          clickOutsideToClose: true,
+	          akt: akt
+	       });
+	}
+	
+	
 });

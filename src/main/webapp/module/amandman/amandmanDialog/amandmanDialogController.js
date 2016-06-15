@@ -1,7 +1,7 @@
-app.controller('aktDialogController', function($scope, $mdDialog, aktService, akt){
+app.controller('amandmanDialogController', function($scope, $mdDialog, aktService, akt, amandmanService){
 	$scope.init = function(){
 		$scope.akt = akt;
-		$scope.akt = "";
+		$scope.amandman = "";
 		$scope.greskaCreate = false;
 	}
 	
@@ -9,16 +9,11 @@ app.controller('aktDialogController', function($scope, $mdDialog, aktService, ak
 		$mdDialog.hide();
 	}
 	$scope.save = function(){
-		aktService.create($scope.akt, function(response){
+		amandmanService.create($scope.amandman, $scope.akt.id, function(response){
 			$scope.cancel();
 		}, function(response){
 			$scope.greskaCreate = true;
 		})
-	}
-	
-	$scope.retDateFromLong = function(long){
-		var date = new Date(long);
-		return date;
 	}
 	
 	$scope.delete = function(){

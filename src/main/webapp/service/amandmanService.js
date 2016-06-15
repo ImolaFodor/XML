@@ -22,10 +22,10 @@ app.service('amandmanService', function($http){
             };
             $http(req).then(onSuccess, onError);
         },
-        create: function(entity,onSuccess,onError){
+        create: function(entity, aktId, onSuccess,onError){
             var req = {
                 method: 'POST',
-                url: 'amandman/',
+                url: 'amandman/'+aktId,
                 headers: {
                     'Content-Type': 'application/xml'
                 },
