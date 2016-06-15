@@ -11,7 +11,7 @@ app.controller('aktiController', function($scope,$state,$mdDialog,$translate, lo
 	          clickOutsideToClose: true,
 	          akt: akt
 	       }).then(function(){
-	    	   ucitajAkte();
+	    	   $scope.ucitajAkte();
 	       });
 	}
 	

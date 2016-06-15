@@ -37,7 +37,7 @@ public class AmendmentController{
         }
     }
 
-    @RequestMapping(value = "/amandman/{aktId}" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "/amandman/" , method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Amandman> post(@RequestBody Amandman amendment) {
         try{
             amendmentDao.create(amendment, Constants.Amendment+amendment.getId().toString(), Constants.ProposedAmendmentCollection);

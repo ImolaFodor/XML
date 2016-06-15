@@ -1,4 +1,3 @@
-
 package xml.model;
 
 import java.io.Serializable;
@@ -25,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="Stanje" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Preambula" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -47,7 +47,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Mesto_donosenja_propisa" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="Ovlasceno_lice" type="{aktovi}TOvlasceno_lice"/>
  *       &lt;/sequence>
- *       &lt;attribute name="Usvojen" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       &lt;attribute name="Id" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -58,6 +57,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "stanje",
     "preambula",
     "naziv",
     "glavniDeo",
@@ -73,6 +73,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Pravni_akt", namespace = "aktovi")
 public class PravniAkt {
 
+    @XmlElement(name = "Stanje", namespace = "aktovi", required = true)
+    protected String stanje;
     @XmlElement(name = "Preambula", namespace = "aktovi")
     protected PravniAkt.Preambula preambula;
     @XmlElement(name = "Naziv", namespace = "aktovi", required = true)
@@ -95,10 +97,32 @@ public class PravniAkt {
     protected String mestoDonosenjaPropisa;
     @XmlElement(name = "Ovlasceno_lice", namespace = "aktovi", required = true)
     protected TOvlascenoLice ovlascenoLice;
-    @XmlAttribute(name = "Usvojen")
-    protected Boolean usvojen;
     @XmlAttribute(name = "Id")
     protected Long id;
+
+    /**
+     * Gets the value of the stanje property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStanje() {
+        return stanje;
+    }
+
+    /**
+     * Sets the value of the stanje property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStanje(String value) {
+        this.stanje = value;
+    }
 
     /**
      * Gets the value of the preambula property.
@@ -365,30 +389,6 @@ public class PravniAkt {
     }
 
     /**
-     * Gets the value of the usvojen property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isUsvojen() {
-        return usvojen;
-    }
-
-    /**
-     * Sets the value of the usvojen property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setUsvojen(Boolean value) {
-        this.usvojen = value;
-    }
-
-    /**
      * Gets the value of the id property.
      * 
      * @return
@@ -460,8 +460,8 @@ public class PravniAkt {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link String }
          * {@link JAXBElement }{@code <}{@link TReferenca }{@code >}
+         * {@link String }
          * 
          * 
          */

@@ -25,7 +25,7 @@ app.service('amandmanService', function($http){
         create: function(entity,onSuccess,onError){
             var req = {
                 method: 'POST',
-                url: 'amandman',
+                url: 'amandman/',
                 headers: {
                     'Content-Type': 'application/xml'
                 },
