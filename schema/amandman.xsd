@@ -6,11 +6,14 @@
     <xs:element name="Amandman">
         <xs:complexType>
             <xs:sequence>
+            	<xs:element name="Stanje" type="xs:string"/>
                 <xs:element name="Kontekst">
                     <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Naziv_pravnog_akta" type="xs:string"/>
-                        </xs:sequence>
+                         <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="actId" type="xs:long"/>
+                            </xs:extension>
+                        </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="Operacija" type="am:TOperacija"/>
@@ -33,4 +36,12 @@
             <xs:enumeration value="brisanje"/>
         </xs:restriction>
     </xs:simpleType>
+     <xs:attributeGroup name="GSadrzaj">
+        <xs:attribute name="r_deo" type="xs:integer"/>
+        <xs:attribute name="r_glava" type="xs:integer"/>
+        <xs:attribute name="r_odeljak" type="xs:integer"/>
+        <xs:attribute name="r_clan" type="xs:integer"/>
+        <xs:attribute name="r_stav" type="xs:integer"/>
+        <xs:attribute name="r_tacka" type="xs:integer"/>
+    </xs:attributeGroup>
 </xs:schema>

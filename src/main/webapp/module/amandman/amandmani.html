@@ -1,4 +1,55 @@
-<md-content flex layout="column" class="container">
+<style>
+textarea
+{
+  border:1px solid #999999;
+  width:100%;
+  margin:5px 0;
+  padding:3px;
+}
 
-
+</style>
+<md-content flex layout="column" class="container" ng-controller = "amandmaniController" ng-init = "init()">
+<md-toolbar class="md-primary md-hue-2 md-whiteframe-z1" layout="row" layout-align="space-around left">
+        <md-input-container md-no-float flex-gt-lg="70">
+            <input class="search" ng-model="search.name" placeholder="Pretrazi amandmane">
+        </md-input-container>
+        <div hide-gt-sm></div>
+</md-toolbar>
+<div class = "container" layout-padding layout-align = "start center">
+	<div layout = "row">
+	<md-button ng-show = "loggedUser.uloga == 'Odbornik'" class ="md-raised md-primary" ng-click = "isDodajNovi = true">Dodaj novi amandman</md-button>
+	<md-button ng-show = "isDodajNovi" class ="md-raised md-primary" ng-click = "isDodajNovi = false">Dodaj novi amandman</md-button>
+	</div>
+	<div ng-show = "isDodajNovi">
+	<form flex layout = "column">
+	<md-input-container flex>
+		<label>Tekst amandmana</label>
+		<textarea ng-model = "noviAkt" flex></textarea>
+	</md-input-container>
+	<md-button class = "md-primary md-raised" ng-click = "kreirajAmandman()">Kreiraj amandman</md-button>
+	</form>
+	</div>
+	<div>
+	<md-card>
+		<md-card-container>
+			<md-list>
+				<md-list-item ng-repeat = "amandman in amandmani" ng-click="openDetails" ng-show = "amandmani.length>0">
+				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
+				
+				<md-divider></md-divider>
+				<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+					            <md-icon  class="material-icons" ng-click = "deleteAmandman(amandman)">delete_forever</md-icon>
+					             <md-tooltip>Izbrisi amandman</md-tooltip>
+					          </md-button>
+			    <md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+					            <md-icon  class="material-icons" ng-click = "openXTML(amandman)">open_in_new</md-icon>
+					             <md-tooltip>Otvori XTML</md-tooltip>
+					          </md-button>
+				<md-list-item ng-hide="false"><label>Ne postoje dostupni amandmani </label></md-list-item>
+				</md-list-item>
+			</md-list>
+		</md-card-container>
+	</md-card>
+	</div>
+</div>
 </md-content>

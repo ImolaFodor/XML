@@ -5,7 +5,7 @@ app.controller('main', function($scope, $state, $mdDialog, $mdUtil,  $mdSidenav,
 			if(response.data.id){
 				$scope.loggedUser = response.data;
 			}else{
-				$state.transitionTo('login');
+				$scope.loggedUser = {};
 			}
 		},function(response){
 			$scope.loggedUser = {};

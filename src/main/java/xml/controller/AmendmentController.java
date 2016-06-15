@@ -1,5 +1,9 @@
 package xml.controller;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import xml.Constants;
 import xml.model.Amandman;
 import xml.repositories.IAmendmentDAO;
-
-import java.util.List;
 
 
 @RestController
@@ -42,6 +45,18 @@ public class AmendmentController{
         }catch (Exception e){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    @RequestMapping(value = "/amandman", method = RequestMethod.GET)
+    public ResponseEntity getAll(){
+    	List<Amandman> amandmani = new ArrayList<Amandman>();
+		try {
+			amandmani = amendmentDao.getAll();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return new ResponseEntity(amandmani, HttpStatus.OK);
     }
 
 }
