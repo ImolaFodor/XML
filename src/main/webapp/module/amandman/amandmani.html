@@ -34,7 +34,7 @@ textarea
 		<md-card-container>
 			<md-list>
 				<md-list-item ng-repeat = "amandman in amandmani" ng-click="openDetails" ng-show = "amandmani.length>0">
-				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
+				<p style = "color:FF6600; font-size:100%;">Amandman {{ amandman.id }} na akt {{amandman.kontekst.actId}} </p>
 				
 				<md-divider></md-divider>
 				<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
@@ -45,7 +45,7 @@ textarea
 					            <md-icon  class="material-icons" ng-click = "openXTML(amandman)">open_in_new</md-icon>
 					             <md-tooltip>Otvori XTML</md-tooltip>
 					          </md-button>
-				<md-list-item ng-hide="false"><label>Ne postoje dostupni amandmani </label></md-list-item>
+				<md-list-item ng-show="amandmani.length === 0"><label>Ne postoje dostupni amandmani </label></md-list-item>
 				</md-list-item>
 			</md-list>
 		</md-card-container>

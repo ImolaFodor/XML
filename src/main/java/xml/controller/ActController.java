@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -69,7 +70,24 @@ public class ActController {
 			return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	@RequestMapping(value = "/akt/getPredlozeni/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PravniAkt>> getPredlozeni() {
+		System.out.println("ADDASDASDASD");
+		try {
+			List<PravniAkt> akti = aktDao.getAll();
+			ArrayList<PravniAkt> predlozeni = new ArrayList<PravniAkt>();
+			for(PravniAkt pa: akti){
+				if(pa.getStanje().equals(Constants.ProposedState)){
+					predlozeni.add(pa);
+				}
+			}
+			return new ResponseEntity<List<PravniAkt>>(predlozeni, HttpStatus.OK);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	@RequestMapping(value = "/akt/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity getById(@PathVariable("id") Long id) {
 		try {
@@ -103,7 +121,7 @@ public class ActController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@RequestMapping(value = "/akt/brisi/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 		System.out.print(id);
@@ -142,8 +160,13 @@ public class ActController {
 
 			TransformerFactory tff = TransformerFactory.newInstance();
 			Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
+			File aktFile = new File("/src/main/webapp/generatedHtmlFiles/akt.html");
+			if(!aktFile.getParentFile().exists()) {
+				System.out.println("JJJJJJ");
+				aktFile.getParentFile().mkdirs();
+			}
 			StreamSource ss = new StreamSource(file);
-			StreamResult sr = new StreamResult(new File("src/main/webapp/generatedHtmlFiles/akt.html"));
+			StreamResult sr = new StreamResult(aktFile);
 
 			tf.transform(ss, sr);
 

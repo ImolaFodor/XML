@@ -1,7 +1,7 @@
 <md-content flex layout="column" class="container" ng-init = "init()">
 <md-toolbar class="md-primary md-hue-2 md-whiteframe-z1" layout="row" layout-align="space-around left">
         <md-input-container md-no-float flex-gt-lg="70">
-            <input class="search" ng-model="search.name" placeholder="Pretrazi akte">
+            <input class="search" ng-model="search.naziv" placeholder="Pretrazi akte">
         </md-input-container>
         <div hide-gt-sm></div>
 </md-toolbar>
@@ -10,7 +10,7 @@
 	<md-card>
 		<md-card-container>
 			<md-list>
-				<md-list-item ng-repeat = "akt in akti" ng-click="openAktDetails()" ng-show = "akti.length>0">
+				<md-list-item ng-repeat = "akt in akti | filter :{naziv: search.naziv}" ng-click="openAktDetails()" ng-show = "akti.length>0">
 				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
 				
 				<md-divider></md-divider>

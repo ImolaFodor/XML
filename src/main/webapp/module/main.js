@@ -1,4 +1,4 @@
-app.controller('main', function($scope, $state, $mdDialog, $mdUtil,  $mdSidenav, loginService){
+app.controller('main', function($scope, $state, $mdDialog, $mdUtil, $window,  $mdSidenav, loginService){
 
     $scope.init = function(){
     	loginService.getProfile(function(response){
@@ -27,6 +27,7 @@ app.controller('main', function($scope, $state, $mdDialog, $mdUtil,  $mdSidenav,
     $scope.login = function(ev){
     	loginService.login($scope.username, $scope.password, function(response){
     		$scope.init();
+    		$window.location.reload();
     	}, function(response){
     		$mdDialog.show(
     				$mdDialog.alert()

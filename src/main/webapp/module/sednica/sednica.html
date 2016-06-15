@@ -1,4 +1,32 @@
-<md-content flex layout="column" class="container">
+<md-content flex layout="column" class="container" ng-init = "init()">
+<md-toolbar class="md-primary md-hue-2 md-whiteframe-z1" layout="row" layout-align="start center">
+        <h3 layout-align = "start center">      SEDNICA</h3>
+        <div hide-gt-sm></div>
+</md-toolbar>
+<div layout = "row" class = "container">
+<div flex = "45" layout-padding layout-align = "start center">
 
+<div>
+	<md-card>
+		<md-card-container>
+			<md-list>
+				<md-list-item ng-repeat = "akt in predlozeni" ng-click="openDetails" ng-show = "predlozeni.length>0">
+				<p style = "color:FF6600; font-size:65%;">{{akt.naziv}} </p>
+				
+				<md-divider></md-divider>
+			    <md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+					            <md-icon  class="material-icons" ng-click = "openXTML(amandman)">open_in_new</md-icon>
+					             <md-tooltip>Otvori XTML</md-tooltip>
+					          </md-button>
+				<md-list-item ng-show="predlozeni.length === 0"><label>Ne postoje predlozeni amandmani </label></md-list-item>
+				</md-list-item>
+			</md-list>
+		</md-card-container>
+	</md-card>
+	</div>
+
+</div>
+
+</div>
 
 </md-content>

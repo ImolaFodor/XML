@@ -18,7 +18,7 @@ min-width: 200px;">
         <md-list layout="column" flex>
             <md-button  class="nav-option" ui-sref-active="active" ui-sref="main.akti">{{'AKTI' | translate}}</md-button>
             <md-button ng-if = "true" class="nav-option" ui-sref-active="active" ui-sref="main.amandmani">{{'AMANDMANI' | translate}}</md-button>
-            <md-button ng-if = "loggedUser.uloga =='Odbornik'"  class="nav-option" ui-sref-active="active" ui-sref="main.sednica">{{'SEDNICA' | translate}}</md-button>
+            <md-button ng-if = "loggedUser.uloga =='Predsednik'"  class="nav-option" ui-sref-active="active" ui-sref="main.sednica">{{'SEDNICA' | translate}}</md-button>
             <div flex></div>
             
             <md-button class="nav-option" data-ng-click="logout()"> {{'LOGOUT' | translate}}</md-button>

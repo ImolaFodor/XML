@@ -11,6 +11,16 @@ app.service('aktService', function($http){
             };
             $http(req).then(onSuccess, onError);
         },
+        getPredlozeni: function (onSuccess,onError) {
+            var req = {
+                method: 'GET',
+                url: 'akt/getPredlozeni/',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            $http(req).then(onSuccess, onError);
+        },
         //byId
         get: function(id,onSuccess,onError){
             var req = {
