@@ -99,7 +99,15 @@
             <xs:attribute name="broj" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="Alineja" type="xs:string"/>
+    <xs:element name="Alineja">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="Id" type="xs:integer"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="Glavni_deo">
         <xs:complexType mixed="false">
             <xs:choice maxOccurs="1" minOccurs="1">
@@ -119,10 +127,12 @@
         <xs:attribute name="Ko_dodaje" type="xs:string"/>
     </xs:complexType>
     <xs:attributeGroup name="AReference">
-        <xs:attribute name="ref_akt" type="xs:string"/>
+        <xs:attribute name="ref_akt" type="xs:integer"/>
         <xs:attribute name="ref_clan" type="xs:integer"/>
         <xs:attribute name="ref_stav" type="xs:integer"/>
         <xs:attribute name="ref_tacka" type="xs:integer"/>
+        <xs:attribute name="ref_podtacka" type="xs:integer"/>
+        <xs:attribute name="ref_alineja" type="xs:integer"/>
     </xs:attributeGroup>
     <xs:complexType name="TReferenca">
         <xs:simpleContent>

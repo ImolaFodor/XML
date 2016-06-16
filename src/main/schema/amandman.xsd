@@ -6,27 +6,35 @@
     <xs:element name="Amandman">
         <xs:complexType>
             <xs:sequence>
-            	<xs:element name="Stanje" type="xs:string"/>
-                <xs:element name="Kontekst">
-                    <xs:complexType>
-                         <xs:simpleContent>
-                            <xs:extension base="xs:string">
-                                <xs:attribute name="actId" type="xs:long"/>
-                            </xs:extension>
-                        </xs:simpleContent>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="Stanje" type="xs:string"/>
+                <xs:element name="Kontekst" type="xs:string"> </xs:element>
+                <xs:element maxOccurs="unbounded" ref="am:Podamandman"/>
+                <xs:element name="Obrazlozenje" type="xs:string"/>
+                <xs:element name="Ovlasceno_lice" type="akt:TOvlasceno_lice"/>
+            </xs:sequence>
+            <xs:attribute name="Id" type="xs:long"/>
+            <xs:attribute name="IdAct" type="xs:long"/>
+            <xs:attribute name="Ko_dodaje" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Podamandman">
+        <xs:complexType>
+            <xs:sequence>
                 <xs:element name="Operacija" type="am:TOperacija"/>
                 <xs:element name="Sadrzaj">
                     <xs:complexType>
                         <xs:choice>
                             <xs:element ref="akt:Glavni_deo"/>
+                            <xs:element maxOccurs="1" ref="akt:Stav"/>
+                            <xs:element maxOccurs="1" ref="akt:Tacka"/>
+                            <xs:element ref="akt:Podtacka"/>
+                            <xs:element ref="akt:Alineja"/>
                         </xs:choice>
+                        <xs:attributeGroup ref="am:GSadrzaj"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="Id" type="xs:long"/>
-            <xs:attribute name="Ko_dodaje" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="TOperacija">
@@ -36,12 +44,14 @@
             <xs:enumeration value="brisanje"/>
         </xs:restriction>
     </xs:simpleType>
-     <xs:attributeGroup name="GSadrzaj">
+    <xs:attributeGroup name="GSadrzaj">
         <xs:attribute name="r_deo" type="xs:integer"/>
         <xs:attribute name="r_glava" type="xs:integer"/>
         <xs:attribute name="r_odeljak" type="xs:integer"/>
         <xs:attribute name="r_clan" type="xs:integer"/>
         <xs:attribute name="r_stav" type="xs:integer"/>
         <xs:attribute name="r_tacka" type="xs:integer"/>
+        <xs:attribute name="r_podtacka" type="xs:integer"/>
+        <xs:attribute name="r_alineja" type="xs:integer"/>
     </xs:attributeGroup>
 </xs:schema>

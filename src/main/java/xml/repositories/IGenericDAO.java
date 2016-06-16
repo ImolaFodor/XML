@@ -14,4 +14,5 @@ public interface IGenericDAO<E,K extends Serializable> {
     void delete(Long id, String constant) throws JAXBException, IOException;
     List<E> getAll() throws JAXBException, IOException;
     E get(Long id) throws JAXBException, IOException;
+	E getEntityWithMaxId(String colId, String ns, String entity) throws JAXBException, IOException;
 }

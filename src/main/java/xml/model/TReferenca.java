@@ -35,13 +35,17 @@ public class TReferenca {
     @XmlValue
     protected String value;
     @XmlAttribute(name = "ref_akt")
-    protected String refAkt;
+    protected BigInteger refAkt;
     @XmlAttribute(name = "ref_clan")
     protected BigInteger refClan;
     @XmlAttribute(name = "ref_stav")
     protected BigInteger refStav;
     @XmlAttribute(name = "ref_tacka")
     protected BigInteger refTacka;
+    @XmlAttribute(name = "ref_podtacka")
+    protected BigInteger refPodtacka;
+    @XmlAttribute(name = "ref_alineja")
+    protected BigInteger refAlineja;
 
     /**
      * Gets the value of the value property.
@@ -72,10 +76,10 @@ public class TReferenca {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link BigInteger }
      *     
      */
-    public String getRefAkt() {
+    public BigInteger getRefAkt() {
         return refAkt;
     }
 
@@ -84,10 +88,10 @@ public class TReferenca {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link BigInteger }
      *     
      */
-    public void setRefAkt(String value) {
+    public void setRefAkt(BigInteger value) {
         this.refAkt = value;
     }
 
@@ -161,6 +165,54 @@ public class TReferenca {
      */
     public void setRefTacka(BigInteger value) {
         this.refTacka = value;
+    }
+
+    /**
+     * Gets the value of the refPodtacka property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getRefPodtacka() {
+        return refPodtacka;
+    }
+
+    /**
+     * Sets the value of the refPodtacka property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setRefPodtacka(BigInteger value) {
+        this.refPodtacka = value;
+    }
+
+    /**
+     * Gets the value of the refAlineja property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getRefAlineja() {
+        return refAlineja;
+    }
+
+    /**
+     * Sets the value of the refAlineja property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setRefAlineja(BigInteger value) {
+        this.refAlineja = value;
     }
 
 }

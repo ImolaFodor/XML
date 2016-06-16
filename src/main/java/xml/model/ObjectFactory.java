@@ -25,7 +25,6 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _Reference_QNAME = new QName("aktovi", "Reference");
-    private final static QName _Alineja_QNAME = new QName("aktovi", "Alineja");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: xml.model
@@ -35,11 +34,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Amandman }
+     * Create an instance of {@link Podamandman }
      * 
      */
-    public Amandman createAmandman() {
-        return new Amandman();
+    public Podamandman createPodamandman() {
+        return new Podamandman();
     }
 
     /**
@@ -51,19 +50,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Amandman.Kontekst }
+     * Create an instance of {@link Podamandman.Sadrzaj }
      * 
      */
-    public Amandman.Kontekst createAmandmanKontekst() {
-        return new Amandman.Kontekst();
+    public Podamandman.Sadrzaj createPodamandmanSadrzaj() {
+        return new Podamandman.Sadrzaj();
     }
 
     /**
-     * Create an instance of {@link Amandman.Sadrzaj }
+     * Create an instance of {@link Amandman }
      * 
      */
-    public Amandman.Sadrzaj createAmandmanSadrzaj() {
-        return new Amandman.Sadrzaj();
+    public Amandman createAmandman() {
+        return new Amandman();
+    }
+
+    /**
+     * Create an instance of {@link TOvlascenoLice }
+     * 
+     */
+    public TOvlascenoLice createTOvlascenoLice() {
+        return new TOvlascenoLice();
     }
 
     /**
@@ -88,6 +95,14 @@ public class ObjectFactory {
      */
     public Podtacka createPodtacka() {
         return new Podtacka();
+    }
+
+    /**
+     * Create an instance of {@link Alineja }
+     * 
+     */
+    public Alineja createAlineja() {
+        return new Alineja();
     }
 
     /**
@@ -147,14 +162,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TOvlascenoLice }
-     * 
-     */
-    public TOvlascenoLice createTOvlascenoLice() {
-        return new TOvlascenoLice();
-    }
-
-    /**
      * Create an instance of {@link Korisnik }
      * 
      */
@@ -169,15 +176,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "aktovi", name = "Reference")
     public JAXBElement<TReferenca> createReference(TReferenca value) {
         return new JAXBElement<TReferenca>(_Reference_QNAME, TReferenca.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "aktovi", name = "Alineja")
-    public JAXBElement<String> createAlineja(String value) {
-        return new JAXBElement<String>(_Alineja_QNAME, String.class, null, value);
     }
 
 }

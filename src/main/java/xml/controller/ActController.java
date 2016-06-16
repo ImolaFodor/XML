@@ -73,6 +73,7 @@ public class ActController {
 	@RequestMapping(value = "/akt/getPredlozeni/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PravniAkt>> getPredlozeni() {
 		try {
+			
 			List<PravniAkt> akti = aktDao.getAll();
 			ArrayList<PravniAkt> predlozeni = new ArrayList<PravniAkt>();
 			for (PravniAkt pa : akti) {
@@ -105,6 +106,13 @@ public class ActController {
 	@RequestMapping(value = "/akt", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity post(@RequestBody PravniAkt object) {
 		try {
+			PravniAkt najveci = aktDao.getEntityWithMaxId(Constants.ActCollection, Constants.ActNamespace, Constants.Act);
+			if(najveci == null){
+				object.setId((long)1);
+			}else{
+				object.setId(najveci.getId()+1);
+			}
+			object.setStanje(Constants.ProposedState);
 			aktDao.create(object, Constants.Act + object.getId().toString(), Constants.ActCollection);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {

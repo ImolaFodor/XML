@@ -1,11 +1,9 @@
 
 package xml.model;
 
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -43,9 +41,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Podtacka", namespace = "aktovi")
 public class Podtacka {
 
-    @XmlElementRef(name = "Alineja", namespace = "aktovi", type = JAXBElement.class, required = false)
+    @XmlElementRef(name = "Alineja", namespace = "aktovi", type = Alineja.class, required = false)
     @XmlMixed
-    protected List<Serializable> content;
+    protected List<Object> content;
     @XmlAttribute(name = "broj")
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger broj;
@@ -68,14 +66,14 @@ public class Podtacka {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link String }{@code >}
      * {@link String }
+     * {@link Alineja }
      * 
      * 
      */
-    public List<Serializable> getContent() {
+    public List<Object> getContent() {
         if (content == null) {
-            content = new ArrayList<Serializable>();
+            content = new ArrayList<Object>();
         }
         return this.content;
     }

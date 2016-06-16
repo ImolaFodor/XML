@@ -45,10 +45,15 @@ public class AmendmentController{
     public ResponseEntity<Amandman> post(@RequestBody Amandman amendment, @PathVariable("aktId") long aktId) {
     	System.out.println("DOdavanje amandmana");
         try{
-        	System.out.println("DOdavanje amandmana 2");
-        	amendment.getKontekst().setActId(aktId);
+        	Amandman najveci = amendmentDao.getEntityWithMaxId(Constants.ProposedAmendmentCollection, Constants.AmendmentNamespace, Constants.Amendment);
+        	if(najveci == null){
+        		amendment.setId((long)1);
+        	}else{
+        		amendment.setId(najveci.getId()+1);
+        	}
+        	
+        	amendment.setIdAct(aktId);
             amendmentDao.create(amendment, Constants.Amendment+amendment.getId().toString(), Constants.ProposedAmendmentCollection);
-            System.out.println("DOdavanje amandmana");
             return new ResponseEntity(HttpStatus.OK);
         }catch (Exception e){
         	e.printStackTrace();

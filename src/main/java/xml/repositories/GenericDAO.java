@@ -117,7 +117,7 @@ public abstract class GenericDAO<T,K extends Serializable> implements IGenericDA
         return entities.get(0);
     }
 
-    /*@Override
+    @Override
     public T getEntityWithMaxId(String colId, String ns, String entity) throws JAXBException, IOException {
         StringBuilder query = new StringBuilder();
 
@@ -154,7 +154,7 @@ public abstract class GenericDAO<T,K extends Serializable> implements IGenericDA
             return null;
 
         return list.get(0);
-    }*/
+    }
 
     //helper methods
     protected ArrayList<T> getByQuery(String query) throws JAXBException, IOException {
@@ -177,7 +177,8 @@ public abstract class GenericDAO<T,K extends Serializable> implements IGenericDA
         return list;
     }
 
-    protected ArrayList<String> getStringByQuery(String query){
+    
+    protected String getStringByQuery(String query){
         EvalResultIterator iterator = null;
 
         ServerEvaluationCall invoker = client.newServerEval();
@@ -185,16 +186,19 @@ public abstract class GenericDAO<T,K extends Serializable> implements IGenericDA
 
         iterator = invoker.eval();
 
+        StringBuilder result = new StringBuilder();
+
         ArrayList<String> list = new ArrayList<>();
 
         if(iterator.hasNext()){
             for(EvalResult res : iterator){
                 list.add(res.getString());
+                result.append(res.getString());
             }
         }else {
             return null;
         }
-        return list;
+        return result.toString();
     }
 
     protected  void execQuery(String query) throws IOException{
