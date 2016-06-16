@@ -1,13 +1,17 @@
 package xml.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -42,6 +46,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import database.XMLConverter;
 import xml.Constants;
@@ -192,7 +201,7 @@ public class ActController {
 	public ResponseEntity getByXHTMLIdPdf(@PathVariable("id") Long id) {
 
 		// Initialize FOP factory object
-		try {
+		/*try {
 			fopFactory = FopFactory.newInstance(new File("src/fop.xconf"));
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
@@ -284,7 +293,72 @@ public class ActController {
 			e.printStackTrace();
 		}
 
-		System.out.println("[INFO] End.");
+		System.out.println("[INFO] End.");*/
+		
+		
+	try{	
+		/*String html = "";
+        BufferedReader in = new BufferedReader(new FileReader("/src/main/webapp/generatedHtmlFiles/aktt.html"));
+        String str;
+        while ((str = in.readLine()) != null) {
+            html +=str;
+        }
+        in.close();*/
+    
+        PravniAkt akt = null;
+		
+		akt = aktDao.get(id);
+		if (akt == null){
+			return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
+		}
+		JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
+		Marshaller marshaller = context.createMarshaller();
+
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+		File file = new File("xhtmlFiles/AktMarshalled.xml");
+		marshaller.marshal(akt, file);
+		System.out.println("Usao");
+
+		TransformerFactory tff = TransformerFactory.newInstance();
+		Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
+		String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		//StreamResult result = new StreamResult(outputStream);
+		
+		StreamSource ss = new StreamSource(file);
+		StreamResult sr = new StreamResult(outputStream);
+
+		tf.transform(ss, sr);
+		
+		//FileInputStream inputStream = new FileInputStream(sr);
+		String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
+		outputStream.close();
+	
+    OutputStream filepdf = new FileOutputStream(new File("src/main/webapp/generatedHtmlFiles/akt.pdf"));
+    Document document = new Document();
+    PdfWriter writer = PdfWriter.getInstance(document, filepdf);
+    document.open();
+    InputStream is = new ByteArrayInputStream(html.getBytes());
+    XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
+    document.close();
+    filepdf.close();	
+	} catch (IOException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+	} catch (DocumentException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+	} catch (JAXBException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (TransformerConfigurationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (TransformerException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
