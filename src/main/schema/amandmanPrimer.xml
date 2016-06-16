@@ -2,10 +2,11 @@
 <am:Amandman xmlns:akt="aktovi"
  xmlns:am="amandmani"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="amandmani file:/amandman.xsd" Id="-1073741773" Ko_dodaje="Ko_dodaje0" Stanje="Stanje0">
+ xsi:schemaLocation="amandmani file:/amandman.xsd" Id="-1073741773" Ko_dodaje="Ko_dodaje0" >
+ 	<am:Stanje>Predlozen</am:Stanje>
     <am:Kontekst actId="1">Kontekst0</am:Kontekst>
     <am:Operacija>dodavanje</am:Operacija>
-    <am:Sadrzaj r_deo="0" r_glava="0" r_odeljak="0" r_clan="0" r_stav="0" r_tacka="0">
+    <am:Sadrzaj>
         <akt:Glavni_deo>
             <akt:Odeljak Naziv="Naziv0" Id="0">
                 <akt:Clan Broj_clana="50" Naziv="Naziv1">

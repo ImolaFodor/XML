@@ -1,31 +1,108 @@
 <md-content flex layout="column" class="container" ng-init = "init()">
-<md-toolbar class="md-primary md-hue-2 md-whiteframe-z1" layout="row" layout-align="start center">
-        <h3 layout-align = "start center">      SEDNICA</h3>
-        <div hide-gt-sm></div>
+<md-toolbar class="md-primary md-hue-2 md-whiteframe-z1" layout="column" layout-align="start center">
+        <div layout-padding layout-align = "start center">
+        	<h3>SEDNICA</h3>
+        </div>
 </md-toolbar>
 <div layout = "row" class = "container">
-<div flex = "45" layout-padding layout-align = "start center">
+<div flex = "100" layout-padding layout-align = "start center" ng-hide = "glasanje">
 
 <div>
 	<md-card>
+		<md-card-title>
+			          <md-card-title-text layout-padding>
+			            <span class="" font-size:85%;><b>Izaberite neki od predloženih pravnih akata za glasanje:</b></span>
+			          </md-card-title-text>
+			        </md-card-title>
+			        <md-divider></md-divider>
 		<md-card-container>
 			<md-list>
-				<md-list-item ng-repeat = "akt in predlozeni" ng-click="openDetails" ng-show = "predlozeni.length>0">
-				<p style = "color:FF6600; font-size:65%;">{{akt.naziv}} </p>
+				<md-list-item ng-repeat = "akt in predlozeni" ng-click="openGlasanje(akt)" ng-show = "predlozeni.length>0" >
+				<p style = "color:FF6600; font-size:75%;">{{akt.naziv}} </p>
 				
 				<md-divider></md-divider>
-			    <md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
-					            <md-icon  class="material-icons" ng-click = "openXTML(amandman)">open_in_new</md-icon>
+			    <md-button ng-show = "true" class="md-icon-button" aria-label="Cancel" ng-click = "openXTML(akt, $event); $event.stopPropagation();">
+					            <md-icon  class="material-icons" >open_in_new</md-icon>
 					             <md-tooltip>Otvori XTML</md-tooltip>
 					          </md-button>
-				<md-list-item ng-show="predlozeni.length === 0"><label>Ne postoje predlozeni amandmani </label></md-list-item>
 				</md-list-item>
+				<md-list-item ng-show="predlozeni.length === 0"><label>Ne postoje predloženi amandmani </label></md-list-item>
 			</md-list>
 		</md-card-container>
 	</md-card>
 	</div>
 
 </div>
+<div ng-show = "glasanje" class = "container" layout-padding layout-align = "start center" flex = "100">
+<md-card>
+		<md-card-container>
+			<md-list>
+				<md-list-item >
+				<p style = "color:FF6600; font-size:80%;">{{currAkt.naziv}} </p>
+				<md-divider></md-divider>
+			    <md-button ng-show = "true" class="md-icon-button" aria-label="openXTML">
+					            <md-icon  class="material-icons" ng-click = "openXTML(currAkt, $event); $event.stopPropagation();">open_in_new</md-icon>
+					             <md-tooltip>Otvori XTML</md-tooltip>
+					          </md-button>
+				</md-list-item>
+			</md-list>
+		</md-card-container>
+	</md-card>
+		<div class = "frame" layout = "column" layout-align = "start center">
+			<h2 ng-show = "prihvacenUnacelu">AKT PRIHVAĆEN U NAČELU</h2>
+			<label ng-hide = "prihvacenUnacelu" >Da li prihvatate trenutni akt u načelu?</label>
+			<div layout = "row" ng-hide = "prihvacenUnacelu">
+			<md-button class= "md-primary md-raised" ng-click = "prihvatiUnacelu()">DA</md-button>
+			<md-button class= "md-primary md-raised" ng-click = "odbijUnacelu()">NE</md-button>
+			
+			</div>
+		</div>
+		<md-divider></md-divider>
+		<div ng-show = "prihvacenUnacelu" class = "frame" layout = "column" layout-align = "start center">
+				<h2>PRIHVATANJE AKTA U CELOSTI</h2>
+			<div layout = "column" flex = "100" layout = "start center">
+				<md-card flex = "100">
+					<md-card-title>
+			          <md-card-title-text layout-padding>
+			            <span class="md-headline">Amandmani na akt</span>
+			          </md-card-title-text>
+			        </md-card-title>
+					<md-card-container>
+						<md-list>
+							<md-divider></md-divider>
+							<md-list-item layout-padding  ng-repeat = "amandman in aktAmandmani"  ng-show = "aktAmandmani.length>0">
+								<p style = "color:01579b;"font-size:100%;" ng-if = "amandman.obradjen">{{amandman.trenutniStatus }}</p>
+								<p style = "color:FF6600; font-size:100%;">Amandman {{ amandman.id }} na akt {{amandman.kontekst.actId}} </p>
+								
+								<md-divider></md-divider>
+							    <md-button ng-show = "true" class="md-icon-button" aria-label="Cancel" >
+									            <md-icon  class="material-icons" ng-click = "openXTML(amandman)">open_in_new</md-icon>
+									             <md-tooltip>Otvori XTML</md-tooltip>
+			     	          	</md-button>
+			     	          	<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel"  ng-disabled = "amandman.obradjen">
+									            <md-icon  class="material-icons" ng-click = "prihvatiAmandman(amandman)">check_circle</md-icon>
+									             <!-- <md-tooltip ng-if = "!amandman.obradjen">Prihvati amandman</md-tooltip> -->
+			     	          	</md-button>
+								<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel"  ng-disabled = "amandman.obradjen">
+									            <md-icon  class="material-icons" ng-click = "odbijAmandman(amandman)">cancel</md-icon>
+									             <!-- <md-tooltip ng-if = "!amandman.obradjen">Odbij amandman</md-tooltip> -->
+			     	          	</md-button>
+			     	          	
+							</md-list-item>
+							<md-list-item ng-hide = "aktAmandmani.length"><label>Ne postoje amandmani na ovaj predlog akta</label></md-list-item>
+						</md-list>
+					</md-card-container>
+				</md-card>
+			</div >
+				<label ng-hide = "neobradjeniAmandmani>0" >Da li prihvatate trenutni akt u celosti?</label>
+				<label ng-show = "neobradjeniAmandmani>0" >Morate obraditi sve amandmane na ovaj akt!</label>
+				<div layout = "row" >
+					<md-button class= "md-primary md-raised" ng-click = "prihvatiUcelosti()" ng-disabled = "neobradjeniAmandmani>0">DA
+					</md-button>
+					<md-button class= "md-primary md-raised" ng-click = "odbijUcelosti()">NE</md-button>
+				</div>
+		</div>
+		<md-divider></md-divider>
 
 </div>
 

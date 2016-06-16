@@ -20,4 +20,13 @@ app.controller('amandmaniController', function($scope,$state,$mdDialog,$translat
 			$scope.init();
 		})
 	}
+	
+	$scope.openXTML = function(amandman){
+		amandmanService.openXTML(amandman.id, function(response){
+			$mdDialog.show({
+		          templateUrl: 'module/amandman/amandmanXHTML.html',
+		          clickOutsideToClose: true,
+		       });
+		})
+	}
 });

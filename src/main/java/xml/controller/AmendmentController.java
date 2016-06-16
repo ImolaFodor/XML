@@ -58,7 +58,6 @@ public class AmendmentController{
     
     @RequestMapping(value = "/amandman", method = RequestMethod.GET)
     public ResponseEntity getAll(){
-    	System.out.println("GEEET");
     	List<Amandman> amandmani = new ArrayList<Amandman>();
 		try {
 			amandmani = amendmentDao.getAll();
@@ -73,6 +72,32 @@ public class AmendmentController{
 			e.printStackTrace();
 		}
     	return new ResponseEntity(amandmani, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/amandman/getByAkt/{aktId}", method = RequestMethod.GET)
+    public ResponseEntity getByAkt(@PathVariable("aktId") long aktId){
+    	List<Amandman> amandmani = new ArrayList<Amandman>();
+		try {
+			amandmani = amendmentDao.getAmendmentsForAct(aktId);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return new ResponseEntity(amandmani, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/amandman/openXHTML/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity getByXHTMLId(@PathVariable("id") Long id) {
+    	
+    	/*
+    	 * GENERATE AMANDMAN HTML BY XSLT
+    	 */
+    	
+    	return new ResponseEntity(HttpStatus.OK);
     }
 
 }

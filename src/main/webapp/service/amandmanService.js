@@ -11,6 +11,16 @@ app.service('amandmanService', function($http){
             };
             $http(req).then(onSuccess, onError);
         },
+        getByAkt: function (aktId, onSuccess,onError) {
+            var req = {
+                method: 'GET',
+                url: 'amandman/getByAkt/'+ aktId,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            $http(req).then(onSuccess, onError);
+        },
         //byId
         get: function(id,onSuccess,onError){
             var req = {

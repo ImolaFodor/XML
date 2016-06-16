@@ -32,6 +32,10 @@ app.config(function($stateProvider, $urlRouterProvider, $translateProvider, $htt
         url: 'sednica',
         templateUrl: 'module/sednica/sednica.html',
         controller: 'sednicaController'
+    }).state('main.viewAkt',{
+    	url:'viewAkt/{id}',
+    	templateUrl: 'module/akt/viewAkt.html',
+    	controller: 'viewAktController'
     });
 	$mdThemingProvider.theme('default')
     .primaryPalette('blue')

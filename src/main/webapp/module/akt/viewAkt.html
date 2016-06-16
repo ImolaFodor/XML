@@ -1,0 +1,7 @@
+<div ng-init = "init()" class = "container">
+<md-content>
+<h2 ng-show = "showNoFile"> NE POSTOJI TRAZENI DOKUMENT!</h2>
+	<div ng-if = "!showNoFile" ng-include="'generatedHtmlFiles/akt.html'">
+	</div>
+</md-content>
+</div>

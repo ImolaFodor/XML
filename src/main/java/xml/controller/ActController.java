@@ -55,14 +55,12 @@ public class ActController {
 
 	@RequestMapping(value = "/akt", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PravniAkt>> getAll() {
-		System.out.println("ADDASDASDASD");
 		try {
 			List<PravniAkt> akati = aktDao.getAll();
 			/*
 			 * if (akati.size() == 0) return new
 			 * ResponseEntity<List<PravniAkt>>(HttpStatus.NO_CONTENT);
 			 */
-			System.out.println("ADASDASD: " + akati.size());
 			return new ResponseEntity<List<PravniAkt>>(akati, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -72,12 +70,14 @@ public class ActController {
 	}
 	@RequestMapping(value = "/akt/getPredlozeni/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PravniAkt>> getPredlozeni() {
-		System.out.println("ADDASDASDASD");
 		try {
 			List<PravniAkt> akti = aktDao.getAll();
 			ArrayList<PravniAkt> predlozeni = new ArrayList<PravniAkt>();
 			for(PravniAkt pa: akti){
-				if(pa.getStanje().equals(Constants.ProposedState)){
+				
+				System.out.println(pa.getStanje());
+				if(pa.getStanje().toString().equals(Constants.ProposedState.toString())){
+					System.out.println(pa.getNaziv());
 					predlozeni.add(pa);
 				}
 			}
@@ -91,6 +91,7 @@ public class ActController {
 	@RequestMapping(value = "/akt/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity getById(@PathVariable("id") Long id) {
 		try {
+			
 			PravniAkt akt = aktDao.get(id);
 			if (akt == null)
 				return new ResponseEntity<List<PravniAkt>>(HttpStatus.NO_CONTENT);
@@ -161,10 +162,6 @@ public class ActController {
 			TransformerFactory tff = TransformerFactory.newInstance();
 			Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
 			File aktFile = new File("/src/main/webapp/generatedHtmlFiles/akt.html");
-			if(!aktFile.getParentFile().exists()) {
-				System.out.println("JJJJJJ");
-				aktFile.getParentFile().mkdirs();
-			}
 			StreamSource ss = new StreamSource(file);
 			StreamResult sr = new StreamResult(aktFile);
 
