@@ -25,6 +25,8 @@ app.controller('amandmaniController', function($scope,$state,$mdDialog,$translat
 		amandmanService.openXTML(amandman.id, function(response){
 			$mdDialog.show({
 		          templateUrl: 'module/amandman/amandmanXHTML.html',
+		          controller: 'XHTMLDialogController',
+		          htmlToShow: response.data,
 		          clickOutsideToClose: true,
 		       });
 		})

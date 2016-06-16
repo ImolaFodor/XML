@@ -110,9 +110,9 @@ public abstract class GenericDAO<T,K extends Serializable> implements IGenericDA
         System.out.print(query.toString());
 
         ArrayList<T> entities = getByQuery(query.toString());
-        System.out.println("**************    "+entities.size()+" ************************");
-        
-        
+        if(entities.size() == 0){
+        	return null;
+        }
         
         return entities.get(0);
     }

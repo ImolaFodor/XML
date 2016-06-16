@@ -36,13 +36,14 @@ aktiService.delete(2, function(response){
 	
 	$scope.openXTML = function(akt){
 		aktService.openXTML(akt.id, function(response){
-			$mdDialog.show({
+			$state.transitionTo('main.viewAkt', {id: akt.id});
+			/*$mdDialog.show({
 		          templateUrl: 'module/akt/aktXHTML.html',
 		          clickOutsideToClose: true,
 		          akt: akt
 		       }).then(function(){
 		    	   ucitajAkte();
-		       });
+		       });*/
 		})
 	}
 	$scope.openPDF = function(akt){

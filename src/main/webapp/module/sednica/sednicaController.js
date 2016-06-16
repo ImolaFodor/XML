@@ -117,10 +117,9 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
 		aktService.openXTML(akt.id, function(response){
 			$mdDialog.show({
 		          templateUrl: 'module/akt/aktXHTML.html',
+		          controller: 'XHTMLDialogController',
 		          clickOutsideToClose: true,
-		          akt: akt
-		       }).then(function(){
-		    	   ucitajAkte();
+		          htmlToShow: response.data
 		       });
 		})
 		

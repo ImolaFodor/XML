@@ -38,7 +38,7 @@ textarea
       vertical-align: middle;
     }
 </style>
-<md-dialog >
+<md-dialog ng-init = "init()" >
 <md-toolbar>
  <div class="md-toolbar-tools">
         <h2>AKT</h2>
@@ -46,6 +46,7 @@ textarea
       </div>
 </md-toolbar>
     <md-dialog-content class = "container" flex = "100">
-     <ng-include src="'generatedHtmlFiles/akt.html'"></ng-include>
+     <div layout-padding ng-bind-html = "htmlToShow">
+	</div>
     </md-dialog-content>
 </md-dialog>

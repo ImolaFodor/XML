@@ -90,14 +90,15 @@ public class AmendmentController{
 		}
     	return new ResponseEntity(amandmani, HttpStatus.OK);
     }
-    @RequestMapping(value = "/amandman/openXHTML/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/amandman/openXHTML/{id}", method = RequestMethod.GET, produces =MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity getByXHTMLId(@PathVariable("id") Long id) {
     	
     	/*
     	 * GENERATE AMANDMAN HTML BY XSLT
     	 */
     	
-    	return new ResponseEntity(HttpStatus.OK);
+    	String html = "<div> <h1>IMPLEMENTIRAJ ME :)</h1></div>";
+    	return new ResponseEntity(html, HttpStatus.OK);
     }
 
 }
