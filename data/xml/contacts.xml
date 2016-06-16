@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xsl/grddl.xsl"?>
+<addr:address_book xmlns="http://www.w3.org/ns/rdfa#" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema#"
+	xmlns:addr="http://www.ftn.uns.ac.rs/rdf/example"
+	xmlns:pred="http://www.ftn.uns.ac.rs/rdf/examples/predicate/">
+    <addr:title>Address book sample</addr:title>
+    <addr:contacts>
+        <addr:contact vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/" 
+        	about="http://www.ftn.uns.ac.rs/rdf/examples/person/John_Smith"
+        	rel="pred:parentTo" 
+        	href="http://www.ftn.uns.ac.rs/rdf/examples/person/Jane_Smith">
+        	<addr:name>
+        		<addr:first_name>John</addr:first_name>
+        		<addr:last_name>Smith</addr:last_name>
+        	</addr:name>
+            <addr:birth_date property="pred:birthDate" datatype="xs:date">1965-08-17</addr:birth_date>
+            <addr:phone_number addr:type="mobile">+44 20 7946 0563</addr:phone_number>
+            <addr:home_address>
+                <addr:country>England</addr:country>
+                <addr:city property="pred:livesIn" datatype="xs:string">London</addr:city>
+                <addr:street>Some random street name 1</addr:street>
+                <addr:number>168</addr:number>
+            </addr:home_address>
+            <addr:office_address>
+                <addr:country>England</addr:country>
+                <addr:city>London</addr:city>
+                <addr:street>Some random street name 2</addr:street>
+                <addr:number>46</addr:number>
+            </addr:office_address>
+            <addr:job property="pred:profession" datatype="xs:string">university professor</addr:job>
+            <addr:interest property="pred:hobby" datatype="xs:string">chess</addr:interest>
+        </addr:contact>
+        <addr:contact vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/" 
+        	about="http://www.ftn.uns.ac.rs/rdf/examples/person/Jane_Smith"
+        	rel="pred:childOf" 
+        	href="http://www.ftn.uns.ac.rs/rdf/examples/person/John_Smith">
+        	<addr:name>
+        		<addr:first_name>Jane</addr:first_name>
+        		<addr:last_name>Smith</addr:last_name>
+        	</addr:name>
+            <addr:birth_date property="pred:birthDate" datatype="xs:date">1991-01-08</addr:birth_date>
+            <addr:phone_number addr:type="mobile">+44 7700 900077</addr:phone_number>
+            <addr:phone_number addr:type="other">+44 20 7946 0120</addr:phone_number>
+            <addr:home_address>
+                <addr:country>England</addr:country>
+                <addr:city property="pred:livesIn" datatype="xs:string">London</addr:city>
+                <addr:street>Some random street name 1</addr:street>
+                <addr:number>16</addr:number>
+            </addr:home_address>
+            <addr:job property="pred:profession" datatype="xs:string">dietician</addr:job>
+            <addr:interest property="pred:hobby" datatype="xs:string">gardening</addr:interest>
+        </addr:contact>
+        <addr:contact vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/" 
+        	about="http://www.ftn.uns.ac.rs/rdf/examples/person/Jack_Smith">
+        	<addr:name>
+        		<addr:first_name>Jack</addr:first_name>
+        		<addr:last_name>Smith</addr:last_name>
+        	</addr:name>
+            <addr:birth_date property="pred:birthDate" datatype="xs:date">1980-04-27</addr:birth_date>
+            <addr:phone_number addr:type="home">+44 141 496 0505</addr:phone_number>
+            <addr:phone_number addr:type="mobile">+44 7465 5670721</addr:phone_number>
+            <addr:home_address>
+                <addr:country>Scotland</addr:country>
+                <addr:city property="pred:livesIn" datatype="xs:string">Glasgow</addr:city>
+                <addr:street>Some random street name 3</addr:street>
+                <addr:number>34</addr:number>
+            </addr:home_address>
+            <addr:office_address>
+                <addr:country>Scotland</addr:country>
+                <addr:city>Paisley</addr:city>
+                <addr:street>Some random street name 4</addr:street>
+                <addr:number>139</addr:number>
+            </addr:office_address>
+            <addr:job property="pred:profession" datatype="xs:string">programmer</addr:job>
+            <addr:interest property="pred:hobby" datatype="xs:string">skydiving</addr:interest>
+        </addr:contact>
+		<addr:contact vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/" 
+        	about="http://www.ftn.uns.ac.rs/rdf/examples/person/Nikola_Nikolic">
+        	<addr:name>
+        		<addr:first_name>Nikola</addr:first_name>
+        		<addr:last_name>Nikolic</addr:last_name>
+        	</addr:name>
+            <addr:birth_date property="pred:birthDate" datatype="xs:date">1989-10-27</addr:birth_date>
+            <addr:phone_number addr:type="home">+381 11 896 0005</addr:phone_number>
+            <addr:phone_number addr:type="mobile">+381 64 7465 567</addr:phone_number>
+            <addr:home_address>
+                <addr:country>Serbia</addr:country>
+                <addr:city property="pred:livesIn" datatype="xs:string">Beograd</addr:city>
+                <addr:street>Some random street name 5</addr:street>
+                <addr:number>10</addr:number>
+            </addr:home_address>
+            <addr:office_address>
+                <addr:country>Beograd</addr:country>
+                <addr:city>Serbia</addr:city>
+                <addr:street>Some random street name 6</addr:street>
+                <addr:number>139</addr:number>
+            </addr:office_address>
+            <addr:job property="pred:profession" datatype="xs:string">system administrator</addr:job>
+            <addr:interest property="pred:hobby" datatype="xs:string">snorkeling</addr:interest>
+        </addr:contact>
+        <addr:contact vocab="http://www.ftn.uns.ac.rs/rdf/examples/predicate/" 
+        	about="http://www.ftn.uns.ac.rs/rdf/examples/person/Petar_Petrovic">
+        	<addr:name>
+        		<addr:first_name>Petar</addr:first_name>
+        		<addr:last_name>Petrovic</addr:last_name>
+        	</addr:name>
+            <addr:birth_date property="pred:birthDate" datatype="xs:date">1982-06-07</addr:birth_date>
+            <addr:phone_number addr:type="home">+381 21 456 829</addr:phone_number>
+            <addr:phone_number addr:type="mobile">+381 62 1108 349</addr:phone_number>
+            <addr:home_address>
+                <addr:country>Serbia</addr:country>
+                <addr:city property="pred:livesIn" datatype="xs:string">Novi Sad</addr:city>
+                <addr:street>Some random street name 7</addr:street>
+                <addr:number>12</addr:number>
+            </addr:home_address>
+            <addr:office_address>
+                <addr:country>Novi Sad</addr:country>
+                <addr:city>Serbia</addr:city>
+                <addr:street>Some random street name 8</addr:street>
+                <addr:number>49</addr:number>
+            </addr:office_address>
+            <addr:job property="pred:profession" datatype="xs:string">lawyer</addr:job>
+            <addr:interest property="pred:hobby" datatype="xs:string">hiking</addr:interest>
+        </addr:contact>
+    </addr:contacts>
+</addr:address_book>

@@ -1,0 +1,5 @@
+SELECT * FROM </akti/predlozeni/metadata>
+WHERE { 
+  ?propis <http://www.parlament.gov.rs/propisi/predicate/belongsTo> ?akt .
+  FILTER ( str(?akt) = "http://www.parlament.gov.rs/propisi/akti/predlozen/7")
+}

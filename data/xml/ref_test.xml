@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xsl/grddl.xsl"?>
+
+<p:Akt 
+ xmlns="http://www.w3.org/ns/rdfa#"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema#"
+ xmlns:p="http://www.parlament.gov.rs/propisi"
+ xmlns:ns1="http://www.parlament.gov.rs/generic_types"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:pred="http://www.parlament.gov.rs/propisi/predicate/"
+ xsi:schemaLocation="http://www.parlament.gov.rs/propisi akt.xsd" 
+ status="u_proceduri">
+    <p:Sporedni_deo about="http://www.parlament.gov.rs/propisi/akti/u_proceduri/ref1">
+        <p:Akt_u_proceduri>
+            <p:Predlagac>
+                PREDSEDNIK VISOKOG SAVETA SUDSTVA Dragomir Milojevic
+            </p:Predlagac>
+            <p:Upucuje_se>
+                VISOKI SAVET SUDSTVA Republika Srbija
+            </p:Upucuje_se>
+            <p:Meta_podaci>
+                <ns1:Oznaka property="pred:oznaka" datatype="xs:string">ref1</ns1:Oznaka>
+                <ns1:Naziv property="pred:naziv" datatype="xs:string">REF TEST</ns1:Naziv>
+                <ns1:Vrsta property="pred:vrsta" datatype="xs:string">Predlog</ns1:Vrsta>
+                <ns1:Datum property="pred:datum" datatype="xs:date">2016-03-25</ns1:Datum>
+                <ns1:Mesto property="pred:mesto" datatype="xs:string">Beograd</ns1:Mesto>
+                <ns1:BrPozitivnihGlasova property="pred:brPozitivnihGlasova" datatype="xs:int">5</ns1:BrPozitivnihGlasova>
+                <ns1:BrUkupnihGlasova property="pred:brUkupnihGlasova" datatype="xs:int">10</ns1:BrUkupnihGlasova>
+            </p:Meta_podaci>
+        </p:Akt_u_proceduri>
+    </p:Sporedni_deo>
+    <p:Glavni_deo>
+        <ns1:Deo>
+            <ns1:Sadrzaj>
+                Na osnovu <ns1:ref id_ref="/doc4/cl13/al3">clana 13. alineja 3. Zakona o Visokom savetu sudstva</ns1:ref>asdfah
+                
+                ....
+            </ns1:Sadrzaj>
+        </ns1:Deo>
+        <ns1:Deo>
+            <ns1:Sadrzaj>
+                U prilogu dopisa dostavljamo Vam Predlog...
+            </ns1:Sadrzaj>
+        </ns1:Deo>
+        <ns1:Deo>
+            <ns1:Sadrzaj>
+                Visoki savet sudstva predlaze da Narodna skupstina Republike Srbije,
+                po hitnom postupku na osnovu <ns1:ref id_ref="/urs/cl147/st1">clana 147.
+                stav 1. Ustava Republike Srbije i </ns1:ref> <ns1:ref id_ref="/zos/cl51/st1">
+                clana 51. stav 1. Zakona o sudijama
+                </ns1:ref>, izabere osamnaest (18)....
+            </ns1:Sadrzaj>
+        </ns1:Deo>
+    </p:Glavni_deo>
+</p:Akt>

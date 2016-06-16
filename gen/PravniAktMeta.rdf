@@ -1,0 +1,22 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.parlament.gov.rs/propisi/akti/predlozen/7">
+    <pred:vrsta xmlns:pred="http://www.parlament.gov.rs/propisi/predicate/" rdf:datatype="string">Predlozen
+	</pred:vrsta>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.parlament.gov.rs/propisi/akti/predlozen/7">
+    <pred:naziv xmlns:pred="http://www.parlament.gov.rs/propisi/predicate/" rdf:datatype="string">xyz123
+	</pred:naziv>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.parlament.gov.rs/propisi/akti/predlozen/7">
+    <pred:drzava xmlns:pred="http://www.parlament.gov.rs/propisi/predicate/" rdf:datatype="string">РЕПУБЛИКА СРБИЈА
+	</pred:drzava>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.parlament.gov.rs/propisi/akti/predlozen/7">
+    <pred:grad xmlns:pred="http://www.parlament.gov.rs/propisi/predicate/" rdf:datatype="string">ГРАД НОВИ САД
+	</pred:grad>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.parlament.gov.rs/propisi/akti/predlozen/7">
+    <pred:datum xmlns:pred="http://www.parlament.gov.rs/propisi/predicate/" rdf:datatype="date">31. децембар 2015. године
+	</pred:datum>
+  </rdf:Description>
+</rdf:RDF>
