@@ -19,6 +19,12 @@ app.controller('amandmaniController', function($scope,$state,$mdDialog,$translat
 		amandmanService.create($scope.noviAmandman, function(response){
 			$scope.init();
 		})
+	},
+	
+	$scope.deleteAmandman = function(amandman){
+		amandmanService.delete(amandman.id, function(response){
+			$scope.init();
+		});
 	}
 	
 	$scope.openXTML = function(amandman){

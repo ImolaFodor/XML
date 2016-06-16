@@ -62,10 +62,6 @@ public class ActController {
 	public ResponseEntity<List<PravniAkt>> getAll() {
 		try {
 			List<PravniAkt> akati = aktDao.getAll();
-			/*
-			 * if (akati.size() == 0) return new
-			 * ResponseEntity<List<PravniAkt>>(HttpStatus.NO_CONTENT);
-			 */
 			return new ResponseEntity<List<PravniAkt>>(akati, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -80,10 +76,7 @@ public class ActController {
 			List<PravniAkt> akti = aktDao.getAll();
 			ArrayList<PravniAkt> predlozeni = new ArrayList<PravniAkt>();
 			for (PravniAkt pa : akti) {
-
-				System.out.println(pa.getStanje());
 				if (pa.getStanje().toString().equals(Constants.ProposedState.toString())) {
-					System.out.println(pa.getNaziv());
 					predlozeni.add(pa);
 				}
 			}
@@ -147,7 +140,6 @@ public class ActController {
 	public ResponseEntity getByXHTMLId(@PathVariable("id") Long id) {
 		try {
 			// Odmah obrisati sadrzaj
-			System.out.println(id);
 			PravniAkt akt = null;
 
 			akt = aktDao.get(id);
@@ -167,14 +159,12 @@ public class ActController {
 			Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
 			String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			// StreamResult result = new StreamResult(outputStream);
 
 			StreamSource ss = new StreamSource(file);
 			StreamResult sr = new StreamResult(outputStream);
 
 			tf.transform(ss, sr);
 
-			// FileInputStream inputStream = new FileInputStream(sr);
 			String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
 			outputStream.close();
 			return new ResponseEntity(html, HttpStatus.OK);

@@ -90,6 +90,23 @@ public class AmendmentController{
 		}
     	return new ResponseEntity(amandmani, HttpStatus.OK);
     }
+    @RequestMapping(value ="amandman/brisi/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteAmandman(@PathVariable("id") Long id){
+    	
+    	try {
+			amendmentDao.delete(id, Constants.Amendment);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    	
+    }
     @RequestMapping(value = "/amandman/openXHTML/{id}", method = RequestMethod.GET, produces =MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity getByXHTMLId(@PathVariable("id") Long id) {
     	
