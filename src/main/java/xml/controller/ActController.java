@@ -1,15 +1,10 @@
 package xml.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,24 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.fop.apps.FOPException;
-import org.apache.fop.apps.FOUserAgent;
-import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
-import org.apache.fop.apps.MimeConstants;
-import org.apache.xalan.processor.TransformerFactoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.xml.sax.SAXException;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -158,12 +146,12 @@ public class ActController {
 	@RequestMapping(value = "/akt/openXHTML/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
 	public ResponseEntity getByXHTMLId(@PathVariable("id") Long id) {
 		try {
-			//Odmah obrisati sadrzaj
+			// Odmah obrisati sadrzaj
 			System.out.println(id);
 			PravniAkt akt = null;
-			
+
 			akt = aktDao.get(id);
-			if (akt == null){
+			if (akt == null) {
 				return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
 			}
 			JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
@@ -179,14 +167,14 @@ public class ActController {
 			Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
 			String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			//StreamResult result = new StreamResult(outputStream);
-			
+			// StreamResult result = new StreamResult(outputStream);
+
 			StreamSource ss = new StreamSource(file);
 			StreamResult sr = new StreamResult(outputStream);
 
 			tf.transform(ss, sr);
-			
-			//FileInputStream inputStream = new FileInputStream(sr);
+
+			// FileInputStream inputStream = new FileInputStream(sr);
 			String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
 			outputStream.close();
 			return new ResponseEntity(html, HttpStatus.OK);
@@ -197,168 +185,157 @@ public class ActController {
 		}
 	}
 
-	@RequestMapping(value = "/akt/openPDF/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity getByXHTMLIdPdf(@PathVariable("id") Long id) {
+	@RequestMapping(value = "/akt/openPDF/{id}", method = RequestMethod.GET)
+	public ResponseEntity getByXHTMLIdPdf(@PathVariable("id") Long id, HttpServletResponse response) {
 
 		// Initialize FOP factory object
-		/*try {
-			fopFactory = FopFactory.newInstance(new File("src/fop.xconf"));
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		/*
+		 * try { fopFactory = FopFactory.newInstance(new File("src/fop.xconf"));
+		 * } catch (SAXException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); }
+		 * 
+		 * // Setup the XSLT transformer factory transformerFactory = new
+		 * TransformerFactoryImpl();
+		 * 
+		 * // Point to the XSL-FO file File xsltFile = new
+		 * File("data/xsl-fo/bookstore_fo.xsl");
+		 * 
+		 * // Create transformation source StreamSource transformSource = new
+		 * StreamSource(xsltFile);
+		 * 
+		 * // Initialize the transformation subject StreamSource source = new
+		 * StreamSource(new File("data/xsl-fo/bookstore.xml"));
+		 * 
+		 * // Initialize user agent needed for the transformation FOUserAgent
+		 * userAgent = fopFactory.newFOUserAgent();
+		 * 
+		 * // Create the output stream to store the results
+		 * ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		 * 
+		 * // Initialize the XSL-FO transformer object Transformer
+		 * xslFoTransformer = null; try { xslFoTransformer =
+		 * transformerFactory.newTransformer(transformSource); } catch
+		 * (TransformerConfigurationException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); }
+		 * 
+		 * // Construct FOP instance with desired output format Fop fop = null;
+		 * try { fop = fopFactory.newFop(MimeConstants.MIME_PDF, userAgent,
+		 * outStream); } catch (FOPException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); }
+		 * 
+		 * // Resulting SAX events Result res = null; try { res = new
+		 * SAXResult(fop.getDefaultHandler()); } catch (FOPException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * // Start XSLT transformation and FOP processing try {
+		 * xslFoTransformer.transform(source, res); } catch
+		 * (TransformerException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 * 
+		 * // Generate PDF file File pdfFile = new
+		 * File("gen/bookstore_result.pdf"); OutputStream out = null; try { out
+		 * = new BufferedOutputStream(new FileOutputStream(pdfFile)); } catch
+		 * (FileNotFoundException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } try { out.write(outStream.toByteArray()); }
+		 * catch (IOException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 * 
+		 * try { System.out.println("[INFO] File \"" +
+		 * pdfFile.getCanonicalPath() + "\" generated successfully."); } catch
+		 * (IOException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } try { out.close(); } catch (IOException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * System.out.println("[INFO] End.");
+		 */
+
+		try {
+			/*
+			 * String html = ""; BufferedReader in = new BufferedReader(new
+			 * FileReader("/src/main/webapp/generatedHtmlFiles/aktt.html"));
+			 * String str; while ((str = in.readLine()) != null) { html +=str; }
+			 * in.close();
+			 */
+
+			PravniAkt akt = null;
+
+			akt = aktDao.get(id);
+			if (akt == null) {
+				return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
+			}
+			JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
+			Marshaller marshaller = context.createMarshaller();
+
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+			File file = new File("xhtmlFiles/AktMarshalled.xml");
+			marshaller.marshal(akt, file);
+			System.out.println("Usao");
+
+			TransformerFactory tff = TransformerFactory.newInstance();
+			Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
+			String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			// StreamResult result = new StreamResult(outputStream);
+
+			StreamSource ss = new StreamSource(file);
+			StreamResult sr = new StreamResult(outputStream);
+
+			tf.transform(ss, sr);
+
+			// FileInputStream inputStream = new FileInputStream(sr);
+			String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
+			outputStream.close();
+
+			OutputStream filepdf = new FileOutputStream(new File("src/main/webapp/generatedHtmlFiles/akt.pdf"));
+			Document document = new Document();
+			PdfWriter writer = PdfWriter.getInstance(document, filepdf);
+			document.open();
+			InputStream is = new ByteArrayInputStream(html.getBytes(XMLConverter.UTF_8.name()));
+			
+			XMLWorkerHelper.getInstance().parseXHtml(writer, document, is, Charset.forName("UTF-8"));
+			document.close();
+			filepdf.close();
+
+			try {
+
+				response.setContentType("application/pdf; charset=UTF-8");
+				response.setHeader("Content-disposition", "attachment; filename=akt.pdf");
+				File xls = new File("src/main/webapp/generatedHtmlFiles/akt.pdf");
+				FileInputStream in = new FileInputStream(xls);
+				OutputStream out = response.getOutputStream();
+
+				byte[] buffer = new byte[8192]; // use bigger if you want
+				int length = 0;
+
+				while ((length = in.read(buffer)) > 0) {
+					out.write(buffer, 0, length);
+				}
+				in.close();
+				out.close();
+				response.flushBuffer();
+				System.out.println("DOWNLOADING");
+			} catch (IOException ex) {
+				System.out.println("Error writing file to output stream. Filename was akt.pdf");
+				throw new RuntimeException("IOError writing file to output stream");
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		// Setup the XSLT transformer factory
-		transformerFactory = new TransformerFactoryImpl();
-
-		// Point to the XSL-FO file
-		File xsltFile = new File("data/xsl-fo/bookstore_fo.xsl");
-
-		// Create transformation source
-		StreamSource transformSource = new StreamSource(xsltFile);
-
-		// Initialize the transformation subject
-		StreamSource source = new StreamSource(new File("data/xsl-fo/bookstore.xml"));
-
-		// Initialize user agent needed for the transformation
-		FOUserAgent userAgent = fopFactory.newFOUserAgent();
-
-		// Create the output stream to store the results
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-
-		// Initialize the XSL-FO transformer object
-		Transformer xslFoTransformer = null;
-		try {
-			xslFoTransformer = transformerFactory.newTransformer(transformSource);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (TransformerConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		// Construct FOP instance with desired output format
-		Fop fop = null;
-		try {
-			fop = fopFactory.newFop(MimeConstants.MIME_PDF, userAgent, outStream);
-		} catch (FOPException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Resulting SAX events
-		Result res = null;
-		try {
-			res = new SAXResult(fop.getDefaultHandler());
-		} catch (FOPException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Start XSLT transformation and FOP processing
-		try {
-			xslFoTransformer.transform(source, res);
 		} catch (TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// Generate PDF file
-		File pdfFile = new File("gen/bookstore_result.pdf");
-		OutputStream out = null;
-		try {
-			out = new BufferedOutputStream(new FileOutputStream(pdfFile));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			out.write(outStream.toByteArray());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println("[INFO] End.");*/
-		
-		
-	try{	
-		/*String html = "";
-        BufferedReader in = new BufferedReader(new FileReader("/src/main/webapp/generatedHtmlFiles/aktt.html"));
-        String str;
-        while ((str = in.readLine()) != null) {
-            html +=str;
-        }
-        in.close();*/
-    
-        PravniAkt akt = null;
-		
-		akt = aktDao.get(id);
-		if (akt == null){
-			return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
-		}
-		JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
-		Marshaller marshaller = context.createMarshaller();
-
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-		File file = new File("xhtmlFiles/AktMarshalled.xml");
-		marshaller.marshal(akt, file);
-		System.out.println("Usao");
-
-		TransformerFactory tff = TransformerFactory.newInstance();
-		Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
-		String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		//StreamResult result = new StreamResult(outputStream);
-		
-		StreamSource ss = new StreamSource(file);
-		StreamResult sr = new StreamResult(outputStream);
-
-		tf.transform(ss, sr);
-		
-		//FileInputStream inputStream = new FileInputStream(sr);
-		String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
-		outputStream.close();
-	
-    OutputStream filepdf = new FileOutputStream(new File("src/main/webapp/generatedHtmlFiles/akt.pdf"));
-    Document document = new Document();
-    PdfWriter writer = PdfWriter.getInstance(document, filepdf);
-    document.open();
-    InputStream is = new ByteArrayInputStream(html.getBytes());
-    XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
-    document.close();
-    filepdf.close();	
-	} catch (IOException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-	} catch (DocumentException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-	} catch (JAXBException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (TransformerConfigurationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (TransformerException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 
 		return new ResponseEntity(HttpStatus.OK);
 	}

@@ -1,4 +1,4 @@
-app.controller('aktiController', function($scope,$state,$mdDialog,$translate, loginService, aktService){
+app.controller('aktiController', function($scope,$state,$mdDialog,$translate,$window, loginService, aktService){
 	$scope.init = function(){
 		/*aktiService.delete(3, function(response){
 			
@@ -48,7 +48,9 @@ aktiService.delete(2, function(response){
 	}
 	$scope.openPDF = function(akt){
 		aktService.openPDF(akt.id, function(response){
-			alert("PDF");
+			 var file = new Blob([response.data], {type: 'application/pdf'});
+		      var fileURL = URL.createObjectURL(file);
+		      $window.open(fileURL);
 		})
 	}
 	$scope.createAmandman = function(akt){

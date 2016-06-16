@@ -68,9 +68,7 @@ app.service('aktService', function($http){
         	var req = {
         			method: 'GET',
         			url: 'akt/openPDF/'+id,
-        			headers: {
-                        'Content-Type': 'application/xml'
-                    },
+        			responseType: 'arraybuffer',
         	}
         	$http(req).then(onSuccess, onError);
         	

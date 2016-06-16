@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:Pravni_akt xmlns:ns2="amandmani" xmlns:ns3="aktovi" Id="2">
+<ns3:Pravni_akt xmlns:ns2="amandmani" xmlns:ns3="aktovi" Id="7">
     <ns3:Stanje>Predlozen</ns3:Stanje>
     <ns3:Preambula>
         На основу <ns3:Reference ref_clan="12">члана 12.</ns3:Reference> Одлуке о обезбеђивању средстава
@@ -8,12 +8,7 @@
         ско веће Града Новог Сада на 271. седници одржаној 31.
         децембра 2015. године, доноси
     </ns3:Preambula>
-    <ns3:Naziv>ПРАВИЛНИ ASDASDaSdК
-        О НАЧИНУ И ПОСТУПКУ ДОДЕЛЕ
-        СРЕДСТАВА ИЗ БУЏЕТА ГРАДА НОВОГ
-        САДА ЗА ПРОГРАМЕ СПОРТСКИХ
-        УДРУЖЕЊА НА ТЕРИТОРИЈИ ГРАДА
-        НОВОГ САДА</ns3:Naziv>
+    <ns3:Naziv>OLALALA</ns3:Naziv>
     <ns3:Glavni_deo>
         <ns3:Glava Naziv="I. ОПШТА ОДРЕДБА">
             <ns3:Clan Broj_clana="1">
