@@ -1,7 +1,10 @@
 <div ng-init = "init()" class = "container">
 <md-content>
-<h2 ng-show = "showNoFile"> NE POSTOJI TRAZENI DOKUMENT!</h2>
-	<div ng-if = "!showNoFile" ng-include="'generatedHtmlFiles/akt.html'">
+<div layout = "column" layout-padding layout-align = "start center">
+	<h2 ng-show = "ucitavanje">DOKUMENT SE UCITAVA!</h2>
+	<h2 ng-show = "!ucitavanje && showNoFile"> NE POSTOJI TRAZENI DOKUMENT!</h2>
+</div>
+	<div ng-bind-html = "htmlToShow">
 	</div>
 </md-content>
 </div>

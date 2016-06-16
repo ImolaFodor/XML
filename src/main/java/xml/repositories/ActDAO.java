@@ -16,7 +16,7 @@ public class ActDAO extends GenericDAO<PravniAkt,Long> implements IActDAO {
 	    private static final String AKT_XSL_PATH = "./src/main/schema/akt.xsl";
 
 	    public ActDAO() throws IOException {
-	        super(USER_SCHEMA_PATH, Constants.ActCollection , Constants.Act,Constants.ActNamespace);
+	        super(USER_SCHEMA_PATH, Constants.ActCollection , Constants.Act ,Constants.ActNamespace);
 	    }
 
 	@Override
