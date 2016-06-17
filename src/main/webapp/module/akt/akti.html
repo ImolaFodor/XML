@@ -3,14 +3,31 @@
         <md-input-container md-no-float flex-gt-lg="70">
             <input class="search" ng-model="search.naziv" placeholder="Pretrazi akte">
         </md-input-container>
+        
+        
         <div hide-gt-sm></div>
 </md-toolbar>
 <div class = "container">
-	<md-button class ="md-raised md-primary" ng-click = "dodajNoviAkt()">Dodaj novi akt</md-button>
+<md-divider></md-divider>
+	<div class = "frame" layout-padding layout="column" layout-align = "start left">
+	<form layout = "column">
+	<label>Prikazi akte po stanju:</label>
+        <md-select ng-model="currStanje">
+        	<md-option value="">
+            SVI
+          </md-option>
+          <md-option ng-repeat="stanje in stanja" value="{{stanje}}">
+            {{stanje}}
+          </md-option>
+        </md-select>
+      </form>
+      </div>
 	<md-card>
 		<md-card-container>
+			<md-button class ="md-raised md-primary" ng-click = "dodajNoviAkt()" flex = "50">Dodaj novi akt</md-button>
+			<md-divider></md-divider>
 			<md-list>
-				<md-list-item ng-repeat = "akt in akti | filter :{naziv: search.naziv}" ng-click="openAktDetails()" ng-show = "akti.length>0">
+				<md-list-item ng-repeat = "akt in akti | filter :{naziv: search.naziv, stanje: currStanje}" ng-click="openAktDetails()" ng-show = "akti.length>0">
 				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
 				
 				<md-divider></md-divider>

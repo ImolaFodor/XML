@@ -3,7 +3,7 @@ var app = angular.module('app',['ui.router', 'ngSanitize', 'ngMessages', 'ngMate
 app.constant('PRIORITY', ['BLOCKER', 'CRITICAL', 'MAJOR', 'MINOR', 'TRIVIAL']);
 app.constant('STATUS', ['TO_DO' , 'IN_PROGRESS', 'VERIFY', 'DONE']);
 app.constant('GENDERS', ['MALE', 'FEMALE']);
-
+app.constant('AKT_STATES', ['Predlozen', 'Usvojen', 'Nije usvojen']);
 app.config(function($stateProvider, $urlRouterProvider, $translateProvider, $httpProvider, $mdThemingProvider,$mdDateLocaleProvider ){
 	
 	$urlRouterProvider.otherwise('/akti');

@@ -1,11 +1,6 @@
-app.controller('aktiController', function($scope,$state,$mdDialog,$translate,$window, loginService, aktService){
+app.controller('aktiController', function($scope,$state,$mdDialog,$translate,$window, loginService, aktService, AKT_STATES){
 	$scope.init = function(){
-		/*aktiService.delete(3, function(response){
-			
-		});
-aktiService.delete(2, function(response){
-			
-		});*/
+		$scope.stanja = AKT_STATES;
 		$scope.ucitajAkte();
 	};
 	$scope.dodajNoviAkt = function(){
