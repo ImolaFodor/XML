@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,7 +61,8 @@ public class ActController {
 
 	@Autowired
 	private HttpServletRequest request;
-
+	
+	
 	@RequestMapping(value = "/akt", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PravniAkt>> getAll() {
 		try {
@@ -105,7 +107,8 @@ public class ActController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/akt", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity post(@RequestBody PravniAkt object) {
 		try {
@@ -137,7 +140,8 @@ public class ActController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/akt/brisi/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable("id") Long id) {
 		System.out.print(id);
@@ -150,10 +154,10 @@ public class ActController {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@PreAuthorize("hasAuthority('Predsednik')")
 	@RequestMapping(value = "/akt/prihvati/{id}", method = RequestMethod.PUT)
 	public ResponseEntity prihvatiAkt(@PathVariable("id") Long id) {
-		
 		try {
 			PravniAkt akt = aktDao.get(id);
 			if(akt == null){
@@ -175,9 +179,9 @@ public class ActController {
 		}
 		
 	}
+	@PreAuthorize("hasAuthority('Predsednik')")
 	@RequestMapping(value = "/akt/odbij/{id}", method = RequestMethod.PUT)
 	public ResponseEntity odbijAkt(@PathVariable("id") Long id) {
-		
 		try {
 			PravniAkt akt = aktDao.get(id);
 			if(akt == null){

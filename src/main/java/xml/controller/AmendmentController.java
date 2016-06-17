@@ -99,7 +99,7 @@ public class AmendmentController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@RequestMapping(value = "/amandman", method = RequestMethod.GET)
 	public ResponseEntity getAll() {
 		List<Amandman> amandmani = new ArrayList<Amandman>();
@@ -117,7 +117,8 @@ public class AmendmentController {
 		}
 		return new ResponseEntity(amandmani, HttpStatus.OK);
 	}
-
+	
+	
 	@RequestMapping(value = "/amandman/getByAkt/{aktId}", method = RequestMethod.GET)
 	public ResponseEntity getByAkt(@PathVariable("aktId") long aktId) {
 		List<Amandman> amandmani = new ArrayList<Amandman>();
@@ -135,7 +136,8 @@ public class AmendmentController {
 		}
 		return new ResponseEntity(amandmani, HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "amandman/brisi/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity deleteAmandman(@PathVariable("id") Long id) {
 
@@ -153,10 +155,10 @@ public class AmendmentController {
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
 	}
-
+	
+	@PreAuthorize("hasAuthority('Predsednik')")
 	@RequestMapping(value = "amandman/prihvati/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity prihvatiAmandman(@PathVariable("id") Long id) {
-
 		try {
 			Amandman am = amendmentDao.get(id);
 			if (am == null) {
@@ -177,10 +179,11 @@ public class AmendmentController {
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
 	}
-
+	
+	
+	@PreAuthorize("hasAuthority('Predsednik')")
 	@RequestMapping(value = "amandman/odbij/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity odbijAmandman(@PathVariable("id") Long id) {
-
 		try {
 			Amandman am = amendmentDao.get(id);
 			if (am == null) {
