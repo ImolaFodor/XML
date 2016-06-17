@@ -1,5 +1,11 @@
 app.controller('amandmaniController', function($scope,$state,$mdDialog,$translate, loginService, amandmanService){
 	$scope.init = function(){
+	/*amandmanService.delete(1, function(response){
+	});
+	amandmanService.delete(2, function(response){
+	});
+	amandmanService.delete(3, function(response){
+	});*/
 		loginService.getProfile(function(response){
 			if(response.data.id){
 				$scope.loggedUser = response.data;

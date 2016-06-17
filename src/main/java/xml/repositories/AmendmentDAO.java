@@ -18,27 +18,11 @@ public class AmendmentDAO extends GenericDAO<Amandman,Long> implements IAmendmen
     @Autowired
     private IActDAO actDAO;
     private static final String AMENDMENT_SCHEMA_PATH = "./src/main/schema/amandman.xsd";
-    private static final String AMENDMENT_XSL_PATH = "./src/main/schema/amandman.xsl";
 
     public AmendmentDAO() throws IOException {
         super(AMENDMENT_SCHEMA_PATH,Constants.ProposedAmendmentCollection,Constants.Amendment,Constants.AmendmentNamespace);
     }
 
-    /**
-     * Metoda reprezentuje glasanje na sednici
-     * @param actsIds Id-jevi akata koji su izglasani za usvajanje
-     * @param amendmentsIds Id-jevi amandmana koji su izglasani za usvajanje
-     */
-   /* @Override
-    public void voting(ArrayList<Long> actsIds,ArrayList<Long> amendmentsIds) throws JAXBException, IOException {
-
-        copyActToAdopted(actsIds);
-        changeStateToNotAdopted();
-
-        for(Long id : amendmentsIds){
-            applyAmendment(id);
-        }
-    }*/
 
     @Override
     public ArrayList<Amandman> getAmendmentsForAct(Long actId) throws JAXBException, IOException {
@@ -350,30 +334,5 @@ public class AmendmentDAO extends GenericDAO<Amandman,Long> implements IAmendmen
     }
    
 
-	@Override
-	public String getXsltDocument(Long id) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void voting(ArrayList<Long> actsIds, ArrayList<Long> amendmentsIds) throws JAXBException, IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-    /**
-     * Preuzima aktove koji nisu usvojeni i postavlja stanje na NotAdopted
-     * @throws JAXBException
-     * @throws IOException
-     */
-    /*protected void changeStateToNotAdopted() throws JAXBException, IOException {
-
-        ArrayList<PravniAkt> acts = actDAO.getProposedActsToChangeState();
-        for(PravniAkt act : acts){
-            actDAO.updateActState(act.getId(),Constants.NotAdoptedState);
-        }
-
-    }*/
 
 }

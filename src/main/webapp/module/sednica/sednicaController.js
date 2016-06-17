@@ -37,13 +37,21 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
 		 */
 		var confirm = $mdDialog.confirm()
         .title('Da li želite da odbijete akt u načelu?')
-        .textContent('Odabirom ove opcije akt će biti odbijen, a samim tim i obrisan, kao i svi njegovi amandmani.')
+        .textContent('Odabirom ove opcije akt će biti odbijen, a i obrisan, kao i svi njegovi amandmani (u zakonskom roku).')
         .ariaLabel('Odbijanje akta u načelu')
         .targetEvent(ev)
         .ok('U redu')
         .cancel('Odustani');
 		  $mdDialog.show(confirm).then(function() {
-			  $scope.glasanje = false;
+			  aktService.refuseAkt($scope.currAkt.id, function(response){
+				  $scope.glasanje = false;
+				  $scope.currAkt = {};
+				  $scope.aktAmandmani = [];
+				  $scope.prihvacenUnacelu = false;
+				  $scope.init();
+			  }, function(response){
+				  
+			  })
 		});
 		
 	}
@@ -87,10 +95,15 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
         .ok('U redu')
         .cancel('Odustani');
 		  $mdDialog.show(confirm).then(function() {
-			  $scope.glasanje = false;
-			  $scope.currAkt = {};
-			  $scope.aktAmandmani = [];
-			  $scope.prihvacenUnacelu = false;
+			  aktService.refuseAkt($scope.currAkt.id, function(response){
+				  $scope.glasanje = false;
+				  $scope.currAkt = {};
+				  $scope.aktAmandmani = [];
+				  $scope.prihvacenUnacelu = false;
+				  $scope.init();
+			  }, function(response){
+				  
+			  })
 		});
 	}
 	
@@ -103,13 +116,15 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
         .ok('U redu')
         .cancel('Odustani');
 		  $mdDialog.show(confirm).then(function() {
-			  $scope.glasanje = false;
-			  $scope.currAkt = {};
-			  $scope.aktAmandmani = [];
-			  $scope.prihvacenUnacelu = false;
-			  /*
-			   * aktService -> prihvati u celosti
-			   */
+			  aktService.adoptAkt($scope.currAkt.id, function(response){
+				  $scope.glasanje = false;
+				  $scope.currAkt = {};
+				  $scope.aktAmandmani = [];
+				  $scope.prihvacenUnacelu = false;
+				  $scope.init();
+			  }, function(response){
+				  
+			  })
 		});
 	}
 	

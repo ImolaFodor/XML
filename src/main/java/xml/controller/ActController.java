@@ -73,7 +73,7 @@ public class ActController {
 	@RequestMapping(value = "/akt/getPredlozeni/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PravniAkt>> getPredlozeni() {
 		try {
-			
+
 			List<PravniAkt> akti = aktDao.getAll();
 			ArrayList<PravniAkt> predlozeni = new ArrayList<PravniAkt>();
 			for (PravniAkt pa : akti) {
@@ -106,11 +106,12 @@ public class ActController {
 	@RequestMapping(value = "/akt", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity post(@RequestBody PravniAkt object) {
 		try {
-			PravniAkt najveci = aktDao.getEntityWithMaxId(Constants.ActCollection, Constants.ActNamespace, Constants.Act);
-			if(najveci == null){
-				object.setId((long)1);
-			}else{
-				object.setId(najveci.getId()+1);
+			PravniAkt najveci = aktDao.getEntityWithMaxId(Constants.ActCollection, Constants.ActNamespace,
+					Constants.Act);
+			if (najveci == null) {
+				object.setId((long) 1);
+			} else {
+				object.setId(najveci.getId() + 1);
 			}
 			object.setStanje(Constants.ProposedState);
 			aktDao.create(object, Constants.Act + object.getId().toString(), Constants.ActCollection);
@@ -142,6 +143,55 @@ public class ActController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@RequestMapping(value = "/akt/prihvati/{id}", method = RequestMethod.PUT)
+	public ResponseEntity prihvatiAkt(@PathVariable("id") Long id) {
+		
+		try {
+			PravniAkt akt = aktDao.get(id);
+			if(akt == null){
+				return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			}
+			
+			aktDao.updateActState(id, Constants.AdoptedState);
+			
+			return new ResponseEntity(HttpStatus.OK);
+			
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	@RequestMapping(value = "/akt/odbij/{id}", method = RequestMethod.PUT)
+	public ResponseEntity odbijAkt(@PathVariable("id") Long id) {
+		
+		try {
+			PravniAkt akt = aktDao.get(id);
+			if(akt == null){
+				return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			}
+			
+			aktDao.updateActState(id, Constants.NotAdoptedState);
+			
+			return new ResponseEntity(HttpStatus.OK);
+			
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 
 	@RequestMapping(value = "/akt/openXHTML/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
@@ -291,7 +341,7 @@ public class ActController {
 			PdfWriter writer = PdfWriter.getInstance(document, filepdf);
 			document.open();
 			InputStream is = new ByteArrayInputStream(html.getBytes(XMLConverter.UTF_8.name()));
-			
+
 			XMLWorkerHelper.getInstance().parseXHtml(writer, document, is, Charset.forName("UTF-8"));
 			document.close();
 			filepdf.close();

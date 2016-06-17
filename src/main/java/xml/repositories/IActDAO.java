@@ -15,5 +15,4 @@ public interface IActDAO extends IGenericDAO<PravniAkt,Long>{
     public ArrayList<PravniAkt> getProposedActsToChangeState() throws JAXBException, IOException;
     public ArrayList<PravniAkt> searchByText(String criteria,String collection) throws IOException;
 
-    String getXsltDocument(Long id) throws IOException;
 }

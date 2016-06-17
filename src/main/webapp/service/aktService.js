@@ -72,7 +72,22 @@ app.service('aktService', function($http){
         	}
         	$http(req).then(onSuccess, onError);
         	
+        },
+        adoptAkt: function(id, onSuccess, onError){
+        	var req = {
+        			method: 'PUT',
+        			url: '/akt/prihvati/'+id,
+        	}
+        	$http(req).then(onSuccess, onError);
+        	
+        },
+        refuseAkt: function(id, onSuccess, onError){
+        	var req = {
+        			method: 'PUT',
+        			url: '/akt/odbij/'+id,
+        	}
+        	$http(req).then(onSuccess, onError);
+        	
         }
-        
     }
 });

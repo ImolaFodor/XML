@@ -34,10 +34,25 @@ public class ActDAO extends GenericDAO<PravniAkt,Long> implements IActDAO {
 	}
 
 	@Override
-	public void updateActState(Long id, String state) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
+    public void updateActState(Long id,String state) throws IOException {
+        StringBuilder query = new StringBuilder();
+        query
+                .append("declare namespace ns = ")
+                .append("\"")
+                .append(Constants.ActNamespace)
+                .append("\";\n")
+                .append("xdmp:node-replace(collection(\"")
+                .append(Constants.ActCollection)
+                .append("\")/ns:Pravni_akt[@Id = ")
+                .append(id.toString())
+                .append("]/ns:Stanje,")
+                .append("<ns:Stanje>")
+                .append(state)
+                .append("</ns:Stanje>")
+                .append(");");
+
+        execQuery(query.toString());
+    }
 
 	@Override
 	public ArrayList<PravniAkt> getProposedActsToChangeState() throws JAXBException, IOException {
@@ -51,9 +66,4 @@ public class ActDAO extends GenericDAO<PravniAkt,Long> implements IActDAO {
 		return null;
 	}
 
-	@Override
-	public String getXsltDocument(Long id) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
