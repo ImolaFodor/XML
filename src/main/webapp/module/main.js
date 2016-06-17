@@ -20,7 +20,10 @@ app.controller('main', function($scope, $state, $mdDialog, $mdUtil, $window,  $m
     }, 200);
 
     $scope.logout = function(){
-        loginService.logout()
+        loginService.logout(function(response){
+        	
+        });
+        $window.location.reload();
         $scope.init();
     };
     

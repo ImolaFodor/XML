@@ -29,6 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +46,7 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
 import database.XMLConverter;
 import xml.Constants;
 import xml.model.Amandman;
+import xml.model.Korisnik;
 import xml.model.PravniAkt;
 import xml.repositories.IActDAO;
 import xml.repositories.IAmendmentDAO;
@@ -69,11 +73,13 @@ public class AmendmentController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/amandman/{aktId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Amandman> post(@RequestBody Amandman amendment, @PathVariable("aktId") long aktId) {
 		System.out.println("DOdavanje amandmana");
 		try {
+			
 			Amandman najveci = amendmentDao.getEntityWithMaxId(Constants.ProposedAmendmentCollection,
 					Constants.AmendmentNamespace, Constants.Amendment);
 			if (najveci == null) {
@@ -81,7 +87,9 @@ public class AmendmentController {
 			} else {
 				amendment.setId(najveci.getId() + 1);
 			}
-
+			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Korisnik korisnik = (Korisnik) authentication.getPrincipal();
+			amendment.setKoDodaje(korisnik.getUsername());
 			amendment.setIdAct(aktId);
 			amendmentDao.create(amendment, Constants.Amendment + amendment.getId().toString(),
 					Constants.ProposedAmendmentCollection);

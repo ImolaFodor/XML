@@ -29,6 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,7 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import database.XMLConverter;
 import xml.Constants;
+import xml.model.Korisnik;
 import xml.model.PravniAkt;
 import xml.repositories.IActDAO;
 
@@ -113,6 +116,9 @@ public class ActController {
 			} else {
 				object.setId(najveci.getId() + 1);
 			}
+			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Korisnik korisnik = (Korisnik) authentication.getPrincipal();
+			object.getOvlascenoLice().setKoDodaje(korisnik.getUsername());
 			object.setStanje(Constants.ProposedState);
 			aktDao.create(object, Constants.Act + object.getId().toString(), Constants.ActCollection);
 			return new ResponseEntity(HttpStatus.OK);

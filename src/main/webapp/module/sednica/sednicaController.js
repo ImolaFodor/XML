@@ -1,9 +1,26 @@
 app.controller('sednicaController', function($scope, $state, $mdDialog,
 		$translate, loginService, aktService, amandmanService) {
 	$scope.init = function() {
+		
+		loginService.getProfile(function(response){
+			if(response.data.id){
+				
+				$scope.loggedUser = response.data;
+				if($scope.loggedUser.uloga != 'Predsednik'){
+					$state.transitionTo('main.akti');
+				}
+				
+			}else{
+				$state.transitionTo('main.akti');
+			}
+		},function(response){
+			$state.transitionTo('main.akti');
+		});
 		aktService.getPredlozeni(function(response) {
 			$scope.predlozeni = response.data;
 		})
+		
+		
 	};
 
 	$scope.openGlasanje = function(akt) {

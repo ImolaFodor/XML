@@ -2,6 +2,16 @@ app.controller('aktiController', function($scope,$state,$mdDialog,$translate,$wi
 	$scope.init = function(){
 		$scope.stanja = AKT_STATES;
 		$scope.ucitajAkte();
+		
+		loginService.getProfile(function(response){
+			if(response.data.id){
+				$scope.loggedUser = response.data;
+			}else{
+				$scope.loggedUser = {};
+			}
+		},function(response){
+			$scope.loggedUser = {};
+		});
 	};
 	$scope.dodajNoviAkt = function(){
 		var akt = {};

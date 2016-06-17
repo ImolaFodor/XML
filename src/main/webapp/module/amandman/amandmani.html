@@ -37,7 +37,7 @@ textarea
 				<p style = "color:FF6600; font-size:100%;">Amandman {{ amandman.id }} na akt {{amandman.idAct}} </p>
 				
 				<md-divider></md-divider>
-				<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+				<md-button  ng-show = "loggedUser.uloga && loggedUser.username == amandman.koDodaje" class="md-icon-button" aria-label="Cancel">
 					            <md-icon  class="material-icons" ng-click = "deleteAmandman(amandman)">delete_forever</md-icon>
 					             <md-tooltip>Izbrisi amandman</md-tooltip>
 					          </md-button>

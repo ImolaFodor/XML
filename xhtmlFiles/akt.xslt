@@ -1,11 +1,14 @@
 <xsl:stylesheet version="1.0" 
     xmlns:ns3="aktovi" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink"
     >
+    <xsl:variable name="PravniAktId" select="ns3:Pravni_akt/@Id" />
     <xsl:template match="/">
+        
         <html>
             <head>
                 <meta charset="UTF-8"/>
                 <xsl:for-each select="ns3:Pravni_akt">
+                    
             		<p>
 					<xsl:value-of select="ns3:Preambula"/>
 					</p>
@@ -155,6 +158,7 @@
     </xsl:template>
     
     <xsl:template match="ns3:Clan">
+        <a name="Clan{@Broj_clana}">
         <p style="text-align:center;">Члан <xsl:value-of select="@Broj_clana"/></p>
         <p style="text-align:center;"><xsl:value-of select="@Naziv"/></p>
         <xsl:choose>
@@ -170,6 +174,7 @@
                 </ol>
             </xsl:otherwise>
         </xsl:choose>
+        </a>
     </xsl:template>
     
     <xsl:template match="ns3:Stav">
@@ -207,7 +212,7 @@
     
     <xsl:template match="ns3:Reference">
         <p>
-            <a href="{@href}"><xsl:apply-templates/></a>
+            <a href="http://localhost:8080/#/viewAkt/{$PravniAktId}#Clan{@ref_clan}"><xsl:value-of select="text()"/></a>
         </p>
     </xsl:template>
     

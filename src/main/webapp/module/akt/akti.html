@@ -24,18 +24,18 @@
       </div>
 	<md-card>
 		<md-card-container>
-			<md-button class ="md-raised md-primary" ng-click = "dodajNoviAkt()" flex = "50">Dodaj novi akt</md-button>
+			<md-button  ng-show = "loggedUser.uloga" class ="md-raised md-primary" ng-click = "dodajNoviAkt()" flex = "50">Dodaj novi akt</md-button>
 			<md-divider></md-divider>
 			<md-list>
 				<md-list-item ng-repeat = "akt in akti | filter :{naziv: search.naziv, stanje: currStanje}" ng-click="openAktDetails()" ng-show = "akti.length>0">
 				<p style = "color:FF6600; font-size:100%;"> {{ akt.naziv }} </p>
 				
 				<md-divider></md-divider>
-				<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+				<md-button  ng-show = "loggedUser.uloga && loggedUser.username == akt.ovlascenoLice.koDodaje" class="md-icon-button" aria-label="Cancel">
 					            <md-icon  class="material-icons" ng-click = "deleteAkt(akt)">delete_forever</md-icon>
 					             <md-tooltip>Izbrisi akt</md-tooltip>
 					          </md-button>
-			 	<md-button ng-show = "true" class="md-icon-button" aria-label="Cancel">
+			 	<md-button ng-show = "loggedUser.uloga && akt.stanje == 'Predlozen'" class="md-icon-button" aria-label="Cancel">
 					            <md-icon  class="material-icons" ng-click = "createAmandman(akt)">create</md-icon>
 					             <md-tooltip>Kreiraj amandman na akt</md-tooltip>
 					          </md-button>

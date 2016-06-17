@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" 
-    xmlns:ns3="aktovi" xmlns:am="amandmani" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:ns3="aktovi" xmlns:am="amandmani" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink"
     >
     <xsl:template match="/">
         <html>
@@ -11,7 +11,7 @@
                     <xsl:value-of select="am:Amandman/am:Stanje"/>
                 </p>
                 <h1 style="text-align:center;">Амандман се односи на </h1>
-                <h2 style="text-align:center;"><xsl:value-of select="am:Amandman/am:Kontekst"/></h2>
+                <h2 style="text-align:center;"><a href="http://localhost:8080/#/viewAkt/{am:Amandman/@IdAct}"><xsl:value-of select="am:Amandman/am:Kontekst"/></a></h2>
                 <p style="text-align:center;">На предлог одборника <xsl:value-of select="am:Amandman/@Ko_dodaje"/></p>    
             </head>
             <body style="font-family: Calibri">
