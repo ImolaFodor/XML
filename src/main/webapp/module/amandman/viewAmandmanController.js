@@ -1,7 +1,7 @@
-app.controller('viewAktController', function($scope,$state,$stateParams,aktService){
+app.controller('viewAmandmanController', function($scope,$state,$stateParams,amandmanService){
 	$scope.init = function(){
 		$scope.ucitavanje = true;
-		aktService.openXTML($stateParams.id, function(response){
+		amandmanService.openXTML($stateParams.id, function(response){
 			console.log(response);
 			$scope.htmlToShow = response.data;
 			$scope.showNoFile = false;

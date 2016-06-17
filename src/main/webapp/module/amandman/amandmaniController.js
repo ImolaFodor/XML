@@ -1,11 +1,5 @@
-app.controller('amandmaniController', function($scope,$state,$mdDialog,$translate, loginService, amandmanService){
+app.controller('amandmaniController', function($scope,$state,$mdDialog,$translate,$window, loginService, amandmanService){
 	$scope.init = function(){
-	/*amandmanService.delete(1, function(response){
-	});
-	amandmanService.delete(2, function(response){
-	});
-	amandmanService.delete(3, function(response){
-	});*/
 		loginService.getProfile(function(response){
 			if(response.data.id){
 				$scope.loggedUser = response.data;
@@ -34,13 +28,13 @@ app.controller('amandmaniController', function($scope,$state,$mdDialog,$translat
 	}
 	
 	$scope.openXTML = function(amandman){
-		amandmanService.openXTML(amandman.id, function(response){
-			$mdDialog.show({
-		          templateUrl: 'module/amandman/amandmanXHTML.html',
-		          controller: 'XHTMLDialogController',
-		          htmlToShow: response.data,
-		          clickOutsideToClose: true,
-		       });
+		$state.transitionTo('main.viewAmandman', {id: amandman.id});
+	}
+	$scope.openPDF = function(akt){
+		amandmanService.openPDF(akt.id, function(response){
+			 var file = new Blob([response.data], {type: 'application/pdf'});
+		      var fileURL = URL.createObjectURL(file);
+		      $window.open(fileURL);
 		})
 	}
 });

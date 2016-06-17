@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:Amandman xmlns:ns2="aktovi" xmlns:ns3="amandmani" Id="8" IdAct="4" Ko_dodaje="kerkezcar">
+    <ns3:Stanje>Stanje0</ns3:Stanje>
+    <ns3:Kontekst>З А К О Н
+        О потраживањy извршних поверилаца</ns3:Kontekst>
+    <ns3:Podamandman>
+        <ns3:Operacija>izmena</ns3:Operacija>
+        <ns3:Sadrzaj r_deo="1" r_clan="2" r_stav="1" r_tacka="7">
+            <ns2:Tacka broj="7">Idemo neka izmena za ROsa!!!</ns2:Tacka>
+        </ns3:Sadrzaj>
+    </ns3:Podamandman>
+    <ns3:Podamandman>
+        <ns3:Operacija>izmena</ns3:Operacija>
+        <ns3:Sadrzaj r_deo="2" r_glava="1" r_odeljak="2" r_clan="7" r_stav="1" r_tacka="4">
+            <ns2:Tacka broj="4">Jos neka izmena bratee!</ns2:Tacka>
+        </ns3:Sadrzaj>
+    </ns3:Podamandman>
+    <ns3:Podamandman>
+        <ns3:Operacija>brisanje</ns3:Operacija>
+        <ns3:Sadrzaj r_deo="2" r_glava="1" r_odeljak="2" r_clan="7" r_stav="1" r_tacka="5">
+            <ns2:Tacka broj="3">Izmena tacke 3</ns2:Tacka>
+        </ns3:Sadrzaj>
+    </ns3:Podamandman>
+    <ns3:Podamandman>
+        <ns3:Operacija>dodavanje</ns3:Operacija>
+        <ns3:Sadrzaj r_deo="2" r_glava="2" r_clan="12">
+            <ns2:Glavni_deo>
+                <ns2:Clan Broj_clana="13">
+                    <ns2:Stav Id="1">
+                        Stav koji se dodaje iz amandmana <ns2:Reference ref_akt="1" ref_clan="2">akt 1 clan 2</ns2:Reference>
+                    </ns2:Stav>
+                </ns2:Clan>
+            </ns2:Glavni_deo>
+        </ns3:Sadrzaj>
+    </ns3:Podamandman>
+    <ns3:Obrazlozenje>Testing</ns3:Obrazlozenje>
+    <ns3:Ovlasceno_lice>
+        <ns2:Titula>Predsednik</ns2:Titula>
+        <ns2:Ime>Djoka</ns2:Ime>
+        <ns2:Prezime>Djokic</ns2:Prezime>
+    </ns3:Ovlasceno_lice>
+</ns3:Amandman>

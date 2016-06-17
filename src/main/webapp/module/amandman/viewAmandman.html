@@ -1,0 +1,10 @@
+<div ng-init = "init()" class = "container">
+<md-content>
+<div layout = "column" layout-padding layout-align = "start center">
+	<h2 ng-show = "ucitavanje">DOKUMENT SE UCITAVA!</h2>
+	<h2 ng-show = "!ucitavanje && showNoFile"> NE POSTOJI TRAZENI DOKUMENT!</h2>
+</div>
+	<div layout-padding ng-bind-html = "htmlToShow">
+	</div>
+</md-content>
+</div>

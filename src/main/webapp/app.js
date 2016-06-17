@@ -36,6 +36,10 @@ app.config(function($stateProvider, $urlRouterProvider, $translateProvider, $htt
     	url:'viewAkt/{id}',
     	templateUrl: 'module/akt/viewAkt.html',
     	controller: 'viewAktController'
+    }).state('main.viewAmandman',{
+    	url:'viewAmandman/{id}',
+    	templateUrl: 'module/amandman/viewAmandman.html',
+    	controller: 'viewAmandmanController'
     });
 	$mdThemingProvider.theme('default')
     .primaryPalette('blue')

@@ -332,7 +332,6 @@ public class ActController {
 
 			tf.transform(ss, sr);
 
-			// FileInputStream inputStream = new FileInputStream(sr);
 			String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
 			outputStream.close();
 

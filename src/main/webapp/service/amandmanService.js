@@ -63,6 +63,14 @@ app.service('amandmanService', function($http){
         	}
         	$http(req).then(onSuccess, onError);
         	
+        },openPDF: function(id, onSuccess, onError){
+        	var req = {
+        			method: 'GET',
+        			url: 'amandman/openPDF/'+id,
+        			responseType: 'arraybuffer',
+        	}
+        	$http(req).then(onSuccess, onError);
+        	
         },
         adoptAmandman: function(id, onSuccess, onError){
         	var req = {
