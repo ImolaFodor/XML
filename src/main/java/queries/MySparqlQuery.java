@@ -17,24 +17,16 @@ import database.DatabaseConfig.ConnectionProperties;
 
 public class MySparqlQuery {
 	public static final String AMANDMAN = "amandmani";
-	public static final String AKT_U_PROCEDURI = "/propisi/akti/u_proceduri";
-	public static final String SVE_AAAAA = "";
 	public static final String AKTI = "akti";
-	public static final String AKT_DONET = "/propisi/akti/doneti";
-
-	private static final String PROPERTY = "http://www.parlament.gov.rs/propisi/predicate/";
+	
+	private static final String PROPERTY = "akti/predicate/";
 
 	private String type;
-	private String oznaka;
 	private String naziv;
 	private String mesto;
 	private String datumMin;
 	private String datumMax;
-	private String vrsta;
-	private int brPozitivnihGlasovaMin = Integer.MIN_VALUE;
-	private int brPozitivnihGlasovaMax = Integer.MAX_VALUE;
-	private int brUkupnihGlasovaMin = Integer.MIN_VALUE;
-	private int brUkupnihGlasovaMax = Integer.MAX_VALUE;
+	private String stanje;
 	private String operator = " && ";
 
 	/**
@@ -86,31 +78,16 @@ public class MySparqlQuery {
 		query.append("PREFIX xs:     <http://www.w3.org/2001/XMLSchema#>\n");
 		query.append("SELECT * FROM <" + metadataCollection + ">\n");
 		query.append("WHERE{\n");
-		query.append(selectTemplate("oznaka"));
 		query.append(selectTemplate("naziv"));
 		query.append(selectTemplate("datum"));
-		query.append(selectTemplate("vrsta"));
+		query.append(selectTemplate("stanje"));
 		query.append(selectTemplate("mesto"));
 
-		String brFilter = "";
-		if (type.equals(AKT_U_PROCEDURI)) {
-			if ((brPozitivnihGlasovaMin != Integer.MIN_VALUE) || (brPozitivnihGlasovaMax != Integer.MAX_VALUE)) {
-				query.append(selectTemplate("brPozitivnihGlasova"));
-				brFilter += " (?brPozitivnihGlasova >= \"" + brPozitivnihGlasovaMin + "\"^^xs:int"
-						+ " && ?brPozitivnihGlasova <= \"" + brPozitivnihGlasovaMax + "\"^^xs:int)" + operator;
-			}
-			if ((brUkupnihGlasovaMin != Integer.MIN_VALUE) || (brUkupnihGlasovaMax != Integer.MAX_VALUE)) {
-				query.append(selectTemplate("brUkupnihGlasova"));
-				brFilter += " (?brUkupnihGlasova >= \"" + brUkupnihGlasovaMin + "\"^^xs:int"
-						+ " && ?brUkupnihGlasova <= \"" + brUkupnihGlasovaMax + "\"^^xs:int)" + operator;
-			}
-		}
-
 		if (useFilter) {
-			query.append("FILTER (" + regexTemplate("?akt", type) + " && (" + regexTemplate("?oznaka", oznaka) + " "
+			query.append("FILTER (" + regexTemplate("?akt", type)
 					+ operator + regexTemplate("?naziv", naziv) + " " + operator + "(?datum >= \"" + datumMin
-					+ "\"^^xs:date && ?datum <= \"" + datumMax + "\"^^xs:date)" + " " + operator + brFilter
-					+ regexTemplate("?vrsta", vrsta) + " " + operator + regexTemplate("?mesto", mesto) + "))\n}");
+					+ "\"^^xs:date && ?datum <= \"" + datumMax + "\"^^xs:date)" + " " + operator
+					+ regexTemplate("?stanje", stanje) + " " + operator + regexTemplate("?mesto", mesto) + "))\n}");
 		} else
 			query.append("\n}");
 		System.out.println(query.toString());
@@ -143,14 +120,13 @@ public class MySparqlQuery {
 	public MySparqlQuery(String type) {
 		super();
 		this.type = type;
-		this.oznaka = "";
 		this.naziv = "";
 		this.mesto = "";
 		this.datumMin = "1970-01-01";
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		this.datumMax = dateFormat.format(date);
-		this.vrsta = "";
+		this.stanje = "";
 	}
 
 	/**
@@ -162,26 +138,17 @@ public class MySparqlQuery {
 	 * @param datum
 	 * @param vrsta
 	 */
-	public MySparqlQuery(String type, String oznaka, String naziv, String mesto, String datumMin, String datumMax,
-			String vrsta) {
+	public MySparqlQuery(String type, String naziv, String mesto, String datumMin, String datumMax,
+			String stanje) {
 		super();
 		this.type = type;
-		this.oznaka = oznaka;
 		this.naziv = naziv;
 		this.mesto = mesto;
 		this.datumMin = datumMin.equals("") ? "1970-01-01" : datumMin;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		this.datumMax = datumMax.equals("") ? dateFormat.format(date) : datumMax;
-		this.vrsta = vrsta;
-	}
-
-	public String getOznaka() {
-		return oznaka;
-	}
-
-	public void setOznaka(String oznaka) {
-		this.oznaka = oznaka;
+		this.stanje = stanje;
 	}
 
 	public String getNaziv() {
@@ -218,12 +185,12 @@ public class MySparqlQuery {
 		this.datumMax = datumMax.equals("") ? dateFormat.format(date) : datumMax;
 	}
 
-	public String getVrsta() {
-		return vrsta;
+	public String getStanje() {
+		return stanje;
 	}
 
-	public void setVrsta(String vrsta) {
-		this.vrsta = vrsta;
+	public void setStanje(String vrsta) {
+		this.stanje = stanje;
 	}
 
 	public String getType() {
@@ -234,25 +201,6 @@ public class MySparqlQuery {
 		this.operator = operator;
 	}
 
-	public void setBrPozitivnihGlasovaMin(int brPozitivnihGlasovaMin) {
-		if (brPozitivnihGlasovaMin > 0)
-			this.brPozitivnihGlasovaMin = brPozitivnihGlasovaMin;
-	}
-
-	public void setBrPozitivnihGlasovaMax(int brPozitivnihGlasovaMax) {
-		if (brPozitivnihGlasovaMax > 0)
-			this.brPozitivnihGlasovaMax = brPozitivnihGlasovaMax;
-	}
-
-	public void setBrUkupnihGlasovaMin(int brUkupnihGlasovaMin) {
-		if (brUkupnihGlasovaMin > 0)
-			this.brUkupnihGlasovaMin = brUkupnihGlasovaMin;
-	}
-
-	public void setBrUkupnihGlasovaMax(int brUkupnihGlasovaMax) {
-		if (brUkupnihGlasovaMax > 0)
-			this.brUkupnihGlasovaMax = brUkupnihGlasovaMax;
-	}
 /*
 	public static void main(String[] args) {
 		//String metadataCollection = "/propisi/akti/doneti/metadata";

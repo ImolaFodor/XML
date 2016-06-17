@@ -1,5 +1,5 @@
-SELECT * FROM </akti/predlozeni/metadata>
+SELECT * FROM </akti/metadata>
 WHERE { 
-  ?propis <http://www.parlament.gov.rs/propisi/predicate/belongsTo> ?akt .
-  FILTER ( str(?akt) = "http://www.parlament.gov.rs/propisi/akti/predlozen/7")
+  ?propis <akti/predicate/belongsTo> ?akt .
+  FILTER ( str(?akt) = "akti/predlozen/7")
 }

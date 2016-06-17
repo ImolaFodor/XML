@@ -75,7 +75,7 @@ public class SparqlQueryExecutor {
 		
 		DatabaseClient client = DatabaseClientFactory.newClient(props.host,
 				props.port, props.database, props.user, props.password,
-				props.authType);
+				DatabaseClientFactory.Authentication.DIGEST);
 		
 		// Create a SPARQL query manager to query RDF datasets
 		SPARQLQueryManager sparqlQueryManager = client.newSPARQLQueryManager();

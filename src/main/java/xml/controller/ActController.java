@@ -51,7 +51,9 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
+import database.DatabaseConfig;
 import database.XMLConverter;
+import util.RDFtoTriples;
 import xml.Constants;
 import xml.model.Korisnik;
 import xml.model.PravniAkt;
@@ -132,6 +134,30 @@ public class ActController {
 			object.getOvlascenoLice().setKoDodaje(korisnik.getUsername());
 			object.setStanje(Constants.ProposedState);
 			aktDao.create(object, Constants.Act + object.getId().toString(), Constants.ActCollection);
+			
+			// metadata - begin
+			try{
+				JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
+				Marshaller marshaller = context.createMarshaller();
+	
+				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	
+				String xmlPath = "gen/tempPostAkt.xml";
+				File file = new File(xmlPath);
+				marshaller.marshal(object, file);
+	
+				//create metadata
+				String grddlPath =  "data/xsl/grddl.xsl";
+				String sparqlNamedGraph = "/akti/metadata";
+				String rdfFilePath = "gen/tempPostAkt.rdf";
+				RDFtoTriples.convert(DatabaseConfig.loadProperties(), xmlPath, rdfFilePath, sparqlNamedGraph, grddlPath);
+				}
+			catch (Exception e)	{
+				System.out.println("MetadataExtract:");
+				e.printStackTrace();
+			}
+			// metadata - end
+			
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
