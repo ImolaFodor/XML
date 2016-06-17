@@ -32,9 +32,6 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
 		
 	}
 	$scope.odbijUnacelu = function(ev){
-		/*
-		 * aktService->odbij
-		 */
 		var confirm = $mdDialog.confirm()
         .title('Da li želite da odbijete akt u načelu?')
         .textContent('Odabirom ove opcije akt će biti odbijen, a i obrisan, kao i svi njegovi amandmani (u zakonskom roku).')
@@ -65,9 +62,13 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
         .ok('U redu')
         .cancel('Odustani');
 		  $mdDialog.show(confirm).then(function() {
-			  amandman.obradjen = true;
-			  $scope.neobradjeniAmandmani--;
-			  amandman.trenutniStatus = "PRIHVAĆEN";
+			  amandmanService.adoptAmandman(amandman.id, function(response){
+				  $scope.currAkt = response.data;
+				  amandman.obradjen = true;
+				  $scope.neobradjeniAmandmani--;
+				  amandman.trenutniStatus = "PRIHVAĆEN";
+			  }, function(response){
+			  })
 		});
 		
 	}
@@ -80,9 +81,13 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
         .ok('U redu')
         .cancel('Odustani');
 		  $mdDialog.show(confirm).then(function() {
-			  amandman.obradjen = true;
-			  $scope.neobradjeniAmandmani--;
-			  amandman.trenutniStatus = "ODBIJEN";
+			  amandmanService.refuseAmandman(amandman.id, function(response){
+				  amandman.obradjen = true;
+				  $scope.neobradjeniAmandmani--;
+				  amandman.trenutniStatus = "ODBIJEN";
+			  }, function(response){
+			  })
+			  
 		});
 	}
 	

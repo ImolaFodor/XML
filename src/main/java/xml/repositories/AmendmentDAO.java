@@ -48,7 +48,8 @@ public class AmendmentDAO extends GenericDAO<Amandman,Long> implements IAmendmen
      * Metoda primenjuje amandman na akt
      * @param id Id amandmana
      */
-    protected void applyAmendment(Long id) {
+    @Override
+	public void applyAmendment(Long id) {
 
         try {
             Amandman amendment = get(id);
@@ -320,7 +321,7 @@ public class AmendmentDAO extends GenericDAO<Amandman,Long> implements IAmendmen
                 .append("return $x/ns:")
                 .append("Amandman")
                 .append("[@Id = ");
-
+       
         //String contetn = null;
         if(isGlavniDeo) {
             query.append(id.toString() + "]/ns:Podamandman[@Id = " + amendmentPartId + "]/ns:Sadrzaj/ns1:Glavni_deo/node()");
@@ -329,6 +330,10 @@ public class AmendmentDAO extends GenericDAO<Amandman,Long> implements IAmendmen
             query.append(id.toString() + "]/ns:Podamandman[@Id = " + amendmentPartId + "]/ns:Sadrzaj/node()");
             //contetn = getStringByQuery(query.toString()).get(0);
         }
+        
+        System.out.println("****************************************");
+        System.out.println(query.toString());
+        System.out.println("****************************************");
 
         return getStringByQuery(query.toString());
     }

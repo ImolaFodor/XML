@@ -30,6 +30,7 @@ import database.XMLConverter;
 import xml.Constants;
 import xml.model.Amandman;
 import xml.model.PravniAkt;
+import xml.repositories.IActDAO;
 import xml.repositories.IAmendmentDAO;
 
 
@@ -38,7 +39,8 @@ public class AmendmentController{
 
     @Autowired
     private IAmendmentDAO amendmentDao;
-    
+    @Autowired
+    private IActDAO actDao;
     @Autowired
 	private HttpServletRequest request;
 
@@ -114,6 +116,50 @@ public class AmendmentController{
     	
     	try {
 			amendmentDao.delete(id, Constants.Amendment);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    	
+    }
+    @RequestMapping(value ="amandman/prihvati/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity prihvatiAmandman(@PathVariable("id") Long id){
+    	
+    	try {
+    		Amandman am = amendmentDao.get(id);
+    		if(am == null){
+    			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    		}
+    		amendmentDao.applyAmendment(id);
+    		PravniAkt pa = actDao.get(am.getIdAct());
+    		amendmentDao.delete(id, Constants.Amendment);
+			return new ResponseEntity(pa, HttpStatus.OK);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    	
+    }
+    @RequestMapping(value ="amandman/odbij/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity odbijAmandman(@PathVariable("id") Long id){
+    	
+    	try {
+    		Amandman am = amendmentDao.get(id);
+    		if(am == null){
+    			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    		}
+    		amendmentDao.delete(id, Constants.Amendment);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

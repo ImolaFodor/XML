@@ -6,6 +6,10 @@
         <html>
             <head>
                 <meta charset="UTF-8"/>
+                
+                <p>Стање амандмана: 
+                    <xsl:value-of select="am:Amandman/am:Stanje"/>
+                </p>
                 <h1 style="text-align:center;">Амандман се односи на </h1>
                 <h2 style="text-align:center;"><xsl:value-of select="am:Amandman/am:Kontekst"/></h2>
                 <p style="text-align:center;">На предлог одборника <xsl:value-of select="am:Amandman/@Ko_dodaje"/></p>    
@@ -19,9 +23,6 @@
                 </p>
                 <p>Овлашћено лице: 
                     <xsl:value-of select="am:Amandman/am:Ovlasceno_lice"/>
-                </p>
-                <p>Стање амандмана: 
-                    <xsl:value-of select="am:Amandman/am:Stanje"/>
                 </p>
 		 	</body>
             

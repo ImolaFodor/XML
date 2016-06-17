@@ -63,7 +63,22 @@ app.service('amandmanService', function($http){
         	}
         	$http(req).then(onSuccess, onError);
         	
-        }
-        
+        },
+        adoptAmandman: function(id, onSuccess, onError){
+        	var req = {
+        			method: 'PUT',
+        			url: 'amandman/prihvati/'+id,
+        	}
+        	$http(req).then(onSuccess, onError);
+        	
+        },
+        refuseAmandman: function(id, onSuccess, onError){
+        	var req = {
+        			method: 'PUT',
+        			url: 'amandman/odbij/'+id,
+        	}
+        	$http(req).then(onSuccess, onError);
+        	
+        },
     }
 });

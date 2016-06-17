@@ -11,5 +11,7 @@ public interface IAmendmentDAO extends IGenericDAO<Amandman,Long> {
 
     public ArrayList<Amandman> getAmendmentsForAct(Long actId) throws JAXBException, IOException;
 
+	void applyAmendment(Long id);
+
 
 }
