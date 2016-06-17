@@ -1,4 +1,4 @@
-app.controller('sednicaController', function($scope, $state, $mdDialog,
+app.controller('sednicaController', function($scope, $state, $mdDialog, $window,
 		$translate, loginService, aktService, amandmanService) {
 	$scope.init = function() {
 		
@@ -152,13 +152,17 @@ app.controller('sednicaController', function($scope, $state, $mdDialog,
 	
 	$scope.openXTML = function(akt, ev){
 		aktService.openXTML(akt.id, function(response){
-			$mdDialog.show({
-		          templateUrl: 'module/akt/aktXHTML.html',
-		          controller: 'XHTMLDialogController',
-		          clickOutsideToClose: true,
-		          htmlToShow: response.data
-		       });
+			var file = new Blob([response.data], {type: 'text/html'});
+		      var fileURL = URL.createObjectURL(file);
+		      $window.open(fileURL);
 		})
 		
+	}
+	$scope.openXTMLAmandman = function(amandman, ev){
+		amandmanService.openXTML(amandman.id, function(response){
+			var file = new Blob([response.data], {type: 'text/html'});
+		      var fileURL = URL.createObjectURL(file);
+		      $window.open(fileURL);
+		})
 	}
 });

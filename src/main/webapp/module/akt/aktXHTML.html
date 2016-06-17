@@ -37,6 +37,10 @@ textarea
       height: 100px;
       vertical-align: middle;
     }
+    
+ a.disabled {
+    pointer-events: none;
+}
 </style>
 <md-dialog ng-init = "init()" >
 <md-toolbar>
@@ -46,7 +50,7 @@ textarea
       </div>
 </md-toolbar>
     <md-dialog-content class = "container" flex = "100">
-     <div layout-padding ng-bind-html = "htmlToShow">
+     <div layout-padding ng-bind-html = "htmlToShow" ng-click = "clickOnDiv($event)">
 	</div>
     </md-dialog-content>
 </md-dialog>

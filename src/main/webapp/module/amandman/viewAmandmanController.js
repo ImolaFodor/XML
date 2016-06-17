@@ -1,9 +1,9 @@
-app.controller('viewAmandmanController', function($scope,$state,$stateParams,amandmanService){
+app.controller('viewAmandmanController', function($scope,$state,$sce, $stateParams,amandmanService){
 	$scope.init = function(){
 		$scope.ucitavanje = true;
 		amandmanService.openXTML($stateParams.id, function(response){
 			console.log(response);
-			$scope.htmlToShow = response.data;
+			$scope.htmlToShow = $scope.to_trusted(response.data);
 			$scope.showNoFile = false;
 			$scope.ucitavanje = false;
 		}, function(response){
@@ -12,4 +12,7 @@ app.controller('viewAmandmanController', function($scope,$state,$stateParams,ama
 		})
 	};
 	
+	 $scope.to_trusted = function(html_code) {
+		    return $sce.trustAsHtml(html_code);
+	 }
 });
