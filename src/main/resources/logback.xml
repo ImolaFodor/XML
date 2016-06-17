@@ -8,10 +8,10 @@
     </encoder>
   </appender>
 
-  <root level="debug">
+  <root level="info">
     <appender-ref ref="STDOUT" />
   </root>
 
-  <logger name="ch.qos.logback" level="ON" additivity="true" />
+  <logger name="ch.qos.logback" level="OFF" additivity="false" />
 
 </configuration>

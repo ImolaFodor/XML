@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:Pravni_akt xmlns:ns2="amandmani" xmlns:ns3="aktovi" Id="3">
-    <ns3:Stanje>Predlozen</ns3:Stanje>
-    <ns3:Naziv>JKLKJAJKDJLAJD:ASDASLKD:ALS
+<ns3:Pravni_akt xmlns:ns2="amandmani" xmlns:ns3="aktovi" Id="10">
+    <ns3:Stanje>Usvojen</ns3:Stanje>
+    <ns3:Naziv>З А К О Н
         О ИЗВРШЕЊУ И ОБЕЗБЕЂЕЊУ</ns3:Naziv>
     <ns3:Glavni_deo>
-        <ns3:Deo Redni_broj="1" Naziv="ОСНОВНЕ ОДРЕДБЕ">
+        <ns3:Deo Redni_broj="1" Naziv="ОСНОВНЕ ОДРЕДБЕ" Id="1">
             <ns3:Clan Broj_clana="1" Naziv="Предмет закона">
                     <ns3:Stav Id="1">
                         Овим законом уређује се поступак у коме судови и јавни извршитељи принудно намирују потраживања извршних поверилаца заснoвана на извршним и веродостојним исправама (извршни поступак), поступак обезбеђења потраживања и положај јавних извршитеља.
@@ -64,16 +64,16 @@
                 </ns3:Stav>      
             </ns3:Clan>
         </ns3:Deo>
-        <ns3:Deo Redni_broj="2" Naziv="ОПШТА ПРАВИЛА ИЗВРШНОГ ПОСТУПКА">
-            <ns3:Glava Naziv="ИЗВРШНА И ВЕРОДОСТОЈНА ИСПРАВА">
-                <ns3:Odeljak Naziv="Основи за доношење решења о извршењу">
+        <ns3:Deo Redni_broj="2" Naziv="ОПШТА ПРАВИЛА ИЗВРШНОГ ПОСТУПКА" Id="2">
+            <ns3:Glava Naziv="ИЗВРШНА И ВЕРОДОСТОЈНА ИСПРАВА" Id="1">
+                <ns3:Odeljak Naziv="Основи за доношење решења о извршењу" Id="1">
                     <ns3:Clan Broj_clana="6">
                         <ns3:Stav Id="1">
                             Решење о извршењу доноси се на основу извршне или веродостојне исправе.
                         </ns3:Stav>
                     </ns3:Clan>
                 </ns3:Odeljak>
-                <ns3:Odeljak Naziv="Извршна исправа">
+                <ns3:Odeljak Naziv="Извршна исправа" Id="2">
                     <ns3:Clan Broj_clana="7" Naziv="Врсте извршних исправа">
                         <ns3:Stav Id="1">
                             Извршне исправе јесу:
@@ -106,7 +106,7 @@
                     </ns3:Clan>
                 </ns3:Odeljak>
             </ns3:Glava>
-            <ns3:Glava Naziv="СРЕДСТВА И ПРЕДМЕТ ИЗВРШЕЊА">
+            <ns3:Glava Naziv="СРЕДСТВА И ПРЕДМЕТ ИЗВРШЕЊА" Id="2">
                 <ns3:Clan Broj_clana="10" Naziv="Средства извршења">
                     <ns3:Stav Id="1">
                         Средства извршења су радње којима се намирује потраживање извршног повериоца.
@@ -137,7 +137,7 @@
     <ns3:Broj_popisa_kod_organa>81649527663</ns3:Broj_popisa_kod_organa>
     <ns3:Datum_donosenja_propisa>21. Jul 2016.</ns3:Datum_donosenja_propisa>
     <ns3:Mesto_donosenja_propisa>Novi Sad</ns3:Mesto_donosenja_propisa>
-    <ns3:Ovlasceno_lice>
+    <ns3:Ovlasceno_lice Ko_dodaje="milos">
         <ns3:Titula>Predsednik</ns3:Titula>
         <ns3:Ime>Rasa</ns3:Ime>
         <ns3:Prezime>Marinkovic</ns3:Prezime>

@@ -24,7 +24,15 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.fop.apps.FopFactory;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -158,6 +166,10 @@ public class ActController {
 	@PreAuthorize("hasAuthority('Predsednik')")
 	@RequestMapping(value = "/akt/prihvati/{id}", method = RequestMethod.PUT)
 	public ResponseEntity prihvatiAkt(@PathVariable("id") Long id) {
+		
+		
+		
+	    
 		try {
 			PravniAkt akt = aktDao.get(id);
 			if(akt == null){
@@ -166,6 +178,33 @@ public class ActController {
 			
 			aktDao.updateActState(id, Constants.AdoptedState);
 			
+			String url = "http://localhost:9090/addFile/";
+			String html = "";
+			try {
+				 html = getAktHtml(akt);
+			} catch (TransformerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String name = akt.getNaziv();
+			List<BasicNameValuePair> urlParameters = new ArrayList<BasicNameValuePair>();
+			urlParameters.add(new BasicNameValuePair("html", html));
+			urlParameters.add(new BasicNameValuePair("name", name));
+			CloseableHttpClient client = HttpClientBuilder.create().build();
+			HttpPost post = new HttpPost(url);
+			
+			try {
+				Header head = new Header();
+				post.addHeader("charset", "UTF-8");
+				post.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
+				HttpResponse response = client.execute(post);
+			} catch (ClientProtocolException e) {
+				System.out.println("Nije usepelo povezivanje sa istorijskim arhivom");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			} catch(Exception e){
+				System.out.println("Nije usepelo povezivanje sa istorijskim arhivom");
+			}
 			return new ResponseEntity(HttpStatus.OK);
 			
 		} catch (JAXBException e) {
@@ -214,27 +253,8 @@ public class ActController {
 			if (akt == null) {
 				return new ResponseEntity<List<PravniAkt>>(HttpStatus.BAD_REQUEST);
 			}
-			JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
-			Marshaller marshaller = context.createMarshaller();
-
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-			File file = new File("xhtmlFiles/AktMarshalled.xml");
-			marshaller.marshal(akt, file);
-			System.out.println("Usao");
-
-			TransformerFactory tff = TransformerFactory.newInstance();
-			Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
-			String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-			StreamSource ss = new StreamSource(file);
-			StreamResult sr = new StreamResult(outputStream);
-
-			tf.transform(ss, sr);
-
-			String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
-			outputStream.close();
+			
+			String html = getAktHtml(akt);
 			return new ResponseEntity(html, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -396,5 +416,30 @@ public class ActController {
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
+	
+	private String getAktHtml(PravniAkt akt) throws JAXBException, TransformerException, IOException{
+		JAXBContext context = JAXBContext.newInstance(PravniAkt.class);
+		Marshaller marshaller = context.createMarshaller();
 
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+		File file = new File("xhtmlFiles/AktMarshalled.xml");
+		marshaller.marshal(akt, file);
+		System.out.println("Usao");
+
+		TransformerFactory tff = TransformerFactory.newInstance();
+		Transformer tf = tff.newTransformer(new StreamSource(new File("xhtmlFiles/akt.xslt")));
+		String phyPath = this.request.getSession().getServletContext().getRealPath(File.pathSeparator);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+		StreamSource ss = new StreamSource(file);
+		StreamResult sr = new StreamResult(outputStream);
+
+		tf.transform(ss, sr);
+
+		String html = new String(outputStream.toString(XMLConverter.UTF_8.name()));
+		outputStream.close();
+		
+		return html;
+	}
 }
