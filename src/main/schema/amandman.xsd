@@ -6,11 +6,11 @@
     <xs:element name="Amandman">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Stanje" type="xs:string"/>
                 <xs:element name="Kontekst" type="xs:string"> </xs:element>
                 <xs:element maxOccurs="unbounded" ref="am:Podamandman"/>
                 <xs:element name="Obrazlozenje" type="xs:string"/>
-                <xs:element name="Ovlasceno_lice" type="akt:TOvlasceno_lice"/>
+                <xs:element name="Ovlasceno_lice" type="akt:TOvlasceno_lice"/>    
+                <xs:element name="Stanje" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="Id" type="xs:long"/>
             <xs:attribute name="IdAct" type="xs:long"/>

@@ -25,7 +25,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="Id" type="xs:long"/>
+            <xs:attribute name="IdAct" type="xs:long"/>
             <xs:attribute name="Ko_dodaje" type="xs:string"/>
         </xs:complexType>
     </xs:element>
